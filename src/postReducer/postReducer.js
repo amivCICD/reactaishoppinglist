@@ -6,6 +6,8 @@ export const INITIAL_STATE = {
     error: false
 }
 
+ // ^ put -  <post: null> ?
+
 export const postReducer = (state, action) => { // current state, action updates state
     switch (action.type) {
         case 'FETCH_START':

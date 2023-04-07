@@ -44,10 +44,11 @@ export default () => {
                 setItemsArr(items)
                 dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: itemsArr })
             } else if (!items) {
-               
+                console.log('no items');
+                setItemsArr([{grocery: "Add an item to start or get list/recipe suggestions from openAI...", acquired: false, id: 4385}])
                 dispatch({ type: ACTION_TYPES.FETCH_ERROR })
                 // setItemsArr(['add items fetch error'])
-                setItemsArr(['plz add an item'])
+                // throw new Error('Nothing to see yet here.')
                 // console.log('There is nothing in local storage...');
             }
             return itemsArr;

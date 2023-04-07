@@ -24,79 +24,85 @@ export default ({ itemsArr, onStateChange }) => {
     //     localStorage.setItem("item1", filtArr)
     //     onStateChange(id)
     // }
+    
+
     const handleRemove = (e) => {
-        console.log(e.target.parentElement.parentElement.id);
         let id = e.target.parentElement.parentElement.id
+        console.log(id);
         let index = id
         let groceryItemIndex = itemsArr[index]
 
         // let updateArray = itemsArr.filter((i, index) => i[index] !== i[groceryItemIndex])
-        let filtArr = itemsArr.filter((i, index) => (index + i.grocery) !== id)
+        // let filtArr = itemsArr.filter((i, index) => (index + i.grocery) !== id)
+        let filtArr = itemsArr.filter((i, index) => (i.id) !== id)
         // let filt2 = itemsArr.filter(i => i[id] !== i)
         // console.log(filt2);
         // console.log(updateArray);
-        console.log(filtArr);
+        console.log(filtArr, 'filt array in handle remove');
 
-        localStorage.setObj("groceryListArr", filtArr)
-        setStateChange(prev => !prev)
-        onStateChange(stateChange)
+        if (filtArr.length === 0 && e) {
+            localStorage.clear();
+            setStateChange(prev => !prev)
+            onStateChange(stateChange)
+        } else {
+            localStorage.setObj("groceryListArr", filtArr)
+            setStateChange(prev => !prev)
+            onStateChange(stateChange)
+        }
+
+        
     }
+
     const handleChange = (e) => {
         let val = e.target.checked
         let bgDiv = e.target.parentElement.parentElement
         let id = e.target.parentElement.parentElement.id
-        let value = e.target.value
-        console.log(value);
+        console.log(val);
+        let whichIndex = el => el.id === id;
+        let itemIndex = itemsArr.findIndex(whichIndex)
 
-        if (e) {
-            
-            console.log(checked);
-        }
         
-        if (checked) {
-            setChecked(checked => !checked)
+        
+        if (val) {
+            // setChecked(checked => !checked)
             console.log(val);
             console.log(id);
-
-            let whichIndex = el => el.id === id;
-            let itemIndex = itemsArr.findIndex(whichIndex)
-            console.log(itemIndex);
-            itemsArr[itemIndex].acquired = checked;
+            bgDiv.classList.remove("from-primary", "to-success")
+            bgDiv.classList.add("from-gray-800", "to-gray-300")
+            
+            
+            // itemsArr[itemIndex].acquired = checked;
+            itemsArr[itemIndex].acquired = true;
             console.log(itemsArr[itemIndex].acquired);
 
-            console.log(itemsArr, 'new items arr');
-
-            val && bgDiv.classList.remove("from-primary", "to-success")
-            val && bgDiv.classList.add("from-gray-800", "to-gray-300")
+            console.log(itemsArr, 'check items arr');
 
             localStorage.setObj("groceryListArr", itemsArr)
             setStateChange(prev => !prev)
             onStateChange(stateChange)
-        } else if (!checked) {
-            setChecked(checked => !checked)
-            let whichIndex = el => el.id === id;
-            let itemIndex = itemsArr.findIndex(whichIndex)
-            console.log(itemIndex);
-            itemsArr[itemIndex].acquired = checked;
+        } else if (!val) {
+            
+            bgDiv.classList.remove("from-gray-800", "to-gray-300")
+            bgDiv.classList.add("from-primary", "to-success")
 
-            console.log(itemsArr, 'new items arr');
 
+            itemsArr[itemIndex].acquired = false;
+            console.log(itemsArr[itemIndex].acquired);
+
+            console.log(itemsArr, 'uncheck items arr');
 
             localStorage.setObj("groceryListArr", itemsArr)
-
-            !val && bgDiv.classList.remove("from-gray-800", "to-gray-300")
-            !val && bgDiv.classList.add("from-primary", "to-success")
-
-
             setStateChange(prev => !prev)
             onStateChange(stateChange)
         }
 
+            // val && bgDiv.classList.remove("from-primary", "to-success")
+            // val && bgDiv.classList.add("from-gray-800", "to-gray-300")
+            // !val && bgDiv.classList.remove("from-gray-800", "to-gray-300")
+            // !val && bgDiv.classList.add("from-primary", "to-success")
 
         // onStateChange(checked)
         // console.log(e.target.parentElement.parentElement);
-        
-        
     }
 
     // useEffect(() => {
@@ -113,13 +119,23 @@ export default ({ itemsArr, onStateChange }) => {
                 // itemsArr?.length !== 0
             itemsArr.length !== 0 && itemsArr?.map((i, index) => {
                     return <div id={`${i?.id}`} key={index + i.grocery}
-                                className="
-                                    text-neutral items-center font-bold bg-gradient-to-r from-primary to-success w-7/8 mx-auto flex p-5 m-2 rounded-sm"
+                                className={`
+                                    text-neutral items-center font-bold bg-gradient-to-r ${i.acquired ? "from-gray-800 to-gray-300" : "from-primary to-success"}  w-7/8 mx-auto flex p-5 m-2 rounded-sm itemDiv`}
                                     >{i.grocery}
                                     <div className="flex justify-end ml-auto items-center">
-                                        <button onClick={handleRemove} className="btn btn-accent btn-sm rounded-1/2 mr-2 font-bold text-xl items-center">-</button>
+                                        <button 
+                                            onClick={handleRemove} 
+                                            className=
+                                            "btn btn-accent btn-sm rounded-1/2 mr-2 font-bold text-xl items-center"
+                                        >
+                                        -</button>
                                         {/* <span className="">Got</span> */}
-                                        <input className="checkbox checkbox-primary ml-1" type="checkbox" checked={i.acquired} value={checked} onChange={handleChange} />
+                                        <input className=
+                                            "checkbox checkbox-primary ml-1 inns" 
+                                            type="checkbox" 
+                                            checked={i.acquired} 
+                                            onChange={handleChange} 
+                                        />
                                     </div>
                             </div>
                 })
