@@ -1,8 +1,6 @@
 import ListItem from "./ListItem"
 import { useEffect, useReducer, useState } from "react"
 import { INITIAL_STATE, postReducer } from "../postReducer/postReducer"
-import { ACTION_TYPES } from "../postReducer/actiontypes"
-import AddItems from "../items/AddItems"
 
 
 let arr = ["Please add an item to continue..."]

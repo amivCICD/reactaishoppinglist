@@ -2,6 +2,8 @@ import { useEffect, useState, useReducer } from "react";
 import { postReducer, INITIAL_STATE } from "../postReducer/postReducer";
 import { ACTION_TYPES } from "../postReducer/actiontypes";
 import List from "../list/List";
+import SaveList from "./subcomponents/SaveList";
+import ViewLists from "./subcomponents/ViewLists";
 
 
 // notes 6:57 P.M. - you are leaving off where we are setting local storage items, now we just need to fetch them,
@@ -44,14 +46,14 @@ export default () => {
                 setItemsArr(items)
                 dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: itemsArr })
             } else if (!items) {
-                console.log('no items');
                 setItemsArr([{grocery: "Add an item to start or get list/recipe suggestions from openAI...", acquired: false, id: 4385}])
+                // dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: itemsArr })
                 dispatch({ type: ACTION_TYPES.FETCH_ERROR })
                 // setItemsArr(['add items fetch error'])
                 // throw new Error('Nothing to see yet here.')
                 // console.log('There is nothing in local storage...');
             }
-            return itemsArr;
+            // return itemsArr; 
         }
         getLocalStorage();
         console.log(itemsArr);
@@ -63,18 +65,23 @@ export default () => {
         dispatch({ type: ACTION_TYPES.CHANGE_INPUT, payload: {name: e.target.name, value: e.target.value ? e.target.value : ""} })
     }
     const handleClick = () => {
-        localStorage.setObj("groceryListArr", state.post.length === 0 ? [{ grocery:state.grocery, acquired: false, id: Math.random().toString().slice(2) }] : [{grocery: state.grocery, acquired: false, id: Math.random().toString().slice(2)}, ...state.post])
+        localStorage.setObj(
+            "groceryListArr", 
+            state.post.length === 0 
+            ? [{ grocery: state.grocery, acquired: false, id: Math.random().toString().slice(2) }] 
+            : [{ grocery: state.grocery, acquired: false, id: Math.random().toString().slice(2) }, ...state.post]
+        )
         // localStorage.setObj("groceryListArr", )
-        document.querySelector('input').value = ''
-        document.querySelector('input').focus();
+        document.querySelector('.groceryInput').value = ''
+        document.querySelector('.groceryInput').focus();
         dispatch({ type: ACTION_TYPES.STATE_UPDATED })
     }
-    const handleKey = (e) => {
+    const handleEnterKeyDown = (e) => {
         const plusBtn = document.querySelector("#plus")
         
         if (e.key === 'Enter' || e.key === 'NumpadEnter') {
             plusBtn.click()
-            document.querySelector('input').value = ''
+            document.querySelector('.groceryInput').value = ''
         } else {
             return
         }
@@ -82,6 +89,7 @@ export default () => {
     const clearList = () => {
         localStorage.clear();
         dispatch({ type: ACTION_TYPES.STATE_UPDATED })
+        // setParentState(prev => !prev)
     }
     
     
@@ -90,12 +98,12 @@ export default () => {
         <>
         <div className="flex items-center justify-center pt-2 pb-6">
             <div className="relative">
-                <input className="input input-bordered input-success w-72 max-w-md" 
+                <input className="groceryInput input input-bordered input-success w-72 max-w-md" 
                        type="text" 
                        placeholder="Grocery..."
                        onChange={handleChange}
                        name="grocery"
-                       onKeyUp={handleKey}
+                       onKeyUp={handleEnterKeyDown}
                 />
                 <div className="absolute top-0 left-[178px]">
                     <button id="plus" className="btn btn-accent btn-outline border-2 text-4xl pb-2"
@@ -110,6 +118,10 @@ export default () => {
             </div>
         </div>
         <List itemsArr={itemsArr} onStateChange={handleStateChange} />
+        <div className="flex items-center justify-center mt-2">
+            <SaveList itemsArr={itemsArr} />
+            <ViewLists />
+        </div>
         </>
     )
 }
