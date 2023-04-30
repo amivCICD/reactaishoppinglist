@@ -9,7 +9,7 @@ export default () => {
     const [initialQuery, setInitialQuery] = useState(null)
 
     useEffect(() => {
-        console.log('use effect aiReply', aiReply);
+        // console.log('use effect aiReply', aiReply);
         
     }, [aiReply])
 
@@ -28,12 +28,12 @@ export default () => {
 
     const handleChange = e => {
         setVal(e.target.value)
-        console.log(val);
+        // console.log(val);
     }
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log(val)
+        // console.log(val)
         sendPost(val)
         setInitialQuery(val)
         setVal("")

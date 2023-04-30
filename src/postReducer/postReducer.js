@@ -30,12 +30,18 @@ export const postReducer = (state, action) => { // current state, action updates
                 post: [],
                 updated: false
             }
+        case "FETCH_REMOVE":
+            return {
+                ...state,
+                loading: true,
+                updated: false
+            } 
         // case "FETCH_REMOVE":
-        //     return {
-        //         ...state,
-        //         loading: true,
-        //         updated: false
-        //     }
+        // return {
+        //     post: [],
+        //     loading: true,
+        //     updated: false
+        // } // modified
         case "STATE_UPDATED":
             return {
                 ...state,

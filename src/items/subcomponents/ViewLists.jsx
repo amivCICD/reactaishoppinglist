@@ -1,14 +1,12 @@
-import { retrieveKeys, retrieveLists } from "../saveRetrieve"
+
+import ViewDialog from "./viewDialog/ViewDialog";
 
 export default () => {
-    let keys = retrieveKeys();
-    console.log(keys);
 
 
     return (
         <>
-
-        
+            <ViewDialog />
         </>
     )
 }

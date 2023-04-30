@@ -5,8 +5,8 @@ import { ACTION_TYPES } from "../postReducer/actiontypes"
 
 // const [list, setList] = useState(null)
 
-export default ({ itemsArr, onStateChange }) => {
-    console.log(itemsArr);
+export default ({ itemsArr, currentObj, onStateChange }) => {
+    // console.log(itemsArr);
     const [childState, setChildState] = useState(null)
     const [array, setArray] = useState()
     const [stateChange, setStateChange] = useState(false)
@@ -117,7 +117,7 @@ export default ({ itemsArr, onStateChange }) => {
             
             {
                 // itemsArr?.length !== 0
-            itemsArr.length !== 0 && itemsArr?.map((i, index) => {
+            itemsArr?.length !== 0 && itemsArr?.map((i, index) => {
                     return <div id={`${i?.id}`} key={index + i.grocery}
                                 className={`
                                     text-neutral items-center font-bold bg-gradient-to-r ${i.acquired ? "from-gray-800 to-gray-300" : "from-primary to-success"}  w-7/8 mx-auto flex p-5 m-2 rounded-sm itemDiv`}
@@ -126,12 +126,12 @@ export default ({ itemsArr, onStateChange }) => {
                                         <button 
                                             onClick={handleRemove} 
                                             className=
-                                            "btn btn-accent btn-sm rounded-1/2 mr-2 font-bold text-xl items-center"
+                                                {`btn btn-accent btn-sm rounded-1/2 mr-2 font-bold text-xl items-center ${itemsArr[0]?.id === 1969 && 'cursor-not-allowed'}`}
                                         >
                                         -</button>
                                         {/* <span className="">Got</span> */}
                                         <input className=
-                                            "checkbox checkbox-primary ml-1 inns" 
+                                            {`checkbox checkbox-primary ml-1 inns ${itemsArr[0]?.id === 1969 && 'cursor-not-allowed'}`} 
                                             type="checkbox" 
                                             checked={i.acquired} 
                                             onChange={handleChange} 

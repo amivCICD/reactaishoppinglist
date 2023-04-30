@@ -5,7 +5,7 @@ import { INITIAL_STATE, postReducer } from "../postReducer/postReducer"
 
 let arr = ["Please add an item to continue..."]
 
-export default ({ itemsArr, onStateChange }) => {
+export default ({ itemsArr, currentObj, onStateChange }) => {
 
     // dispatch
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
@@ -43,7 +43,7 @@ export default ({ itemsArr, onStateChange }) => {
             
             <div className="w-5/6 sm:w-3/4 bg-neutral flex flex-col items-start mx-auto p-5 h-fit rounded-md">
                 {/* <ListItem itemsArr={itemsArr?.length !== 0 ? itemsArr : arr} onStateChange={onStateChange} /> */}
-                <ListItem itemsArr={itemsArr} onStateChange={onStateChange} />
+                <ListItem itemsArr={itemsArr} currentObj={currentObj} onStateChange={onStateChange} />
             </div>
         
         </div>

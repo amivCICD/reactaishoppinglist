@@ -8,10 +8,10 @@ export default ({ aiReply, initialQuery }) => {
 
     useEffect(() => {
 
-        console.log('aireply as props ', aiReply);
-        console.log('aireply.reply ', aiReply?.reply);
+        // console.log('aireply as props ', aiReply);
+        // console.log('aireply.reply ', aiReply?.reply);
         let arr = aiReply?.reply.split('\n')
-        console.log(arr);
+        // console.log(arr);
         
     }, [aiReply])
 
