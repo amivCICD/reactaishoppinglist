@@ -1,16 +1,13 @@
 import ListItem from "./ListItem"
-import { useEffect, useReducer, useState } from "react"
-import { INITIAL_STATE, postReducer } from "../postReducer/postReducer"
+import { useEffect } from "react"
+
 
 
 let arr = ["Please add an item to continue..."]
 
-export default ({ itemsArr, currentObj, onStateChange }) => {
+export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
 
-    // dispatch
-    const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
-    const [storage, setStorage] = useState([])
-    // let itemsArr;
+    
 
     useEffect(() => {
         if (localStorage.getItem("item1")) {
@@ -43,7 +40,12 @@ export default ({ itemsArr, currentObj, onStateChange }) => {
             
             <div className="w-5/6 sm:w-3/4 bg-neutral flex flex-col items-start mx-auto p-5 h-fit rounded-md">
                 {/* <ListItem itemsArr={itemsArr?.length !== 0 ? itemsArr : arr} onStateChange={onStateChange} /> */}
-                <ListItem itemsArr={itemsArr} currentObj={currentObj} onStateChange={onStateChange} />
+                <ListItem 
+                    itemsArr={itemsArr} 
+                    currentObj={currentObj}
+                    setCurrentObj={setCurrentObj} 
+                    onStateChange={onStateChange} 
+                />
             </div>
         
         </div>

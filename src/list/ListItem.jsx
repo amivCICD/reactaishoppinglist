@@ -5,11 +5,11 @@ import { ACTION_TYPES } from "../postReducer/actiontypes"
 
 // const [list, setList] = useState(null)
 
-export default ({ itemsArr, currentObj, onStateChange }) => {
+export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
     // console.log(itemsArr);
     const [childState, setChildState] = useState(null)
     const [array, setArray] = useState()
-    const [stateChange, setStateChange] = useState(false)
+    // const [stateChange, setStateChange] = useState(false) // get rid of state changers, postReducer should control state 05/11
     const [checked, setChecked] = useState(Boolean)
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
@@ -40,32 +40,36 @@ export default ({ itemsArr, currentObj, onStateChange }) => {
         // console.log(updateArray);
         console.log(filtArr, 'filt array in handle remove');
 
-        if (filtArr.length === 0 && e) {
-            localStorage.clear();
-            setStateChange(prev => !prev)
-            onStateChange(stateChange)
-        } else {
-            localStorage.setObj("groceryListArr", filtArr)
-            setStateChange(prev => !prev)
-            onStateChange(stateChange)
-        }
+        setCurrentObj(filtArr)
+
+        // if (filtArr.length === 0 && e) {
+        //     localStorage.clear();
+        //     // setStateChange(prev => !prev)
+        //     // onStateChange(stateChange)
+        //     // set ACTION_TYPES.CLEAR_STORAGE
+        // } else {
+        //     localStorage.setObj("groceryListArr", filtArr)
+        //     // setStateChange(prev => !prev)
+        //     // onStateChange(stateChange)
+        //     dispatch({ type : ACTION_TYPES.STATE_UPDATED, payload: filtArr  })
+        // }
 
         
     }
 
     const handleChange = (e) => {
-        let val = e.target.checked
+        let checkedVal = e.target.checked
         let bgDiv = e.target.parentElement.parentElement
         let id = e.target.parentElement.parentElement.id
-        console.log(val);
+        console.log(checkedVal);
         let whichIndex = el => el.id === id;
         let itemIndex = itemsArr.findIndex(whichIndex)
 
         
         
-        if (val) {
+        if (checkedVal) {
             // setChecked(checked => !checked)
-            console.log(val);
+            console.log(checkedVal);
             console.log(id);
             bgDiv.classList.remove("from-primary", "to-success")
             bgDiv.classList.add("from-gray-800", "to-gray-300")
@@ -78,9 +82,9 @@ export default ({ itemsArr, currentObj, onStateChange }) => {
             console.log(itemsArr, 'check items arr');
 
             localStorage.setObj("groceryListArr", itemsArr)
-            setStateChange(prev => !prev)
-            onStateChange(stateChange)
-        } else if (!val) {
+            // setStateChange(prev => !prev)
+            // onStateChange(stateChange)
+        } else if (!checkedVal) {
             
             bgDiv.classList.remove("from-gray-800", "to-gray-300")
             bgDiv.classList.add("from-primary", "to-success")
@@ -92,23 +96,23 @@ export default ({ itemsArr, currentObj, onStateChange }) => {
             console.log(itemsArr, 'uncheck items arr');
 
             localStorage.setObj("groceryListArr", itemsArr)
-            setStateChange(prev => !prev)
-            onStateChange(stateChange)
+            // setStateChange(prev => !prev)
+            // onStateChange(stateChange)
         }
 
-            // val && bgDiv.classList.remove("from-primary", "to-success")
-            // val && bgDiv.classList.add("from-gray-800", "to-gray-300")
-            // !val && bgDiv.classList.remove("from-gray-800", "to-gray-300")
-            // !val && bgDiv.classList.add("from-primary", "to-success")
+            // checkedVal && bgDiv.classList.remove("from-primary", "to-success")
+            // checkedVal && bgDiv.classList.add("from-gray-800", "to-gray-300")
+            // !checkedVal && bgDiv.classList.remove("from-gray-800", "to-gray-300")
+            // !checkedVal && bgDiv.classList.add("from-primary", "to-success")
 
         // onStateChange(checked)
         // console.log(e.target.parentElement.parentElement);
     }
 
-    // useEffect(() => {
-    //     // setArray(itemsArr)
+    useEffect(() => {
+        // setArray(itemsArr)
  
-    // }, [])
+    }, [state.STATE_UPDATED])
     
 
     return (

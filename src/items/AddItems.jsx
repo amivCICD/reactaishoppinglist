@@ -33,7 +33,7 @@ export default () => {
     // const [initialObj, setInitialObj] = useLocalStorage(key, INITIAL_STATE)
     const [currentObj, setCurrentObj] = useLocalStorage(null, INITIAL_STATE)
 
-    
+    // I believe you need to change your initial_state to be your starting object
     
 
     const handleStateChange = (newState) => {
@@ -217,6 +217,7 @@ export default () => {
         
         dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: currentObj })
         setItemsArr(currentObj.groceryList)
+        console.log(currentObj);
 
     }, [currentObj])
     
@@ -296,7 +297,9 @@ export default () => {
     }
     const clearList = () => {
         // localStorage.clear();
-        deleteList(currentObj.id)
+        // localStorage.setObj('groceryList', [])
+        // deleteList(currentObj.id)
+        console.log(currentObj);
         dispatch({ type: ACTION_TYPES.FETCH_REMOVE })
         // setParentState(prev => !prev)
     }
@@ -326,7 +329,7 @@ export default () => {
                 </div>
             </div>
         </div>
-        <List itemsArr={itemsArr} currentObj={currentObj} onStateChange={handleStateChange} />
+        <List itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} onStateChange={handleStateChange} />
         <div className="flex items-center justify-center mt-2">
             <SaveList itemsArr={itemsArr} currentObj={currentObj} />
             <ViewLists />

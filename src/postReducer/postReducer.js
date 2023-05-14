@@ -1,9 +1,12 @@
 
+const starterId = Math.random().toString().slice(2)
+console.log(starterId);
 
 export const INITIAL_STATE = {
     loading: false,
     post: [],
-    error: false
+    error: false,
+    id: starterId
 }
 
  // ^ put -  <post: null> ?
@@ -45,6 +48,7 @@ export const postReducer = (state, action) => { // current state, action updates
         case "STATE_UPDATED":
             return {
                 ...state,
+                post: [action.payload],
                 error: false,
                 updated: true
             }
