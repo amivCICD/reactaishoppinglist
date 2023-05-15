@@ -1,12 +1,14 @@
 
-const starterId = Math.random().toString().slice(2)
+const starterId = Math.random().toString().slice(2);
+const randomId = Math.random().toString().slice(2);
 console.log(starterId);
 
 export const INITIAL_STATE = {
     loading: false,
     post: [],
     error: false,
-    id: starterId
+    groceryList: [{ grocery: 'Please add a grocery item to proceed...', id: randomId, acquired: false }],
+    initial: true
 }
 
  // ^ put -  <post: null> ?
@@ -24,7 +26,7 @@ export const postReducer = (state, action) => { // current state, action updates
             return {
                 ...state,
                 loading: false,
-                post: action.payload
+                post: [action.payload]
             }
         case 'FETCH_ERROR':
             return {
@@ -48,7 +50,7 @@ export const postReducer = (state, action) => { // current state, action updates
         case "STATE_UPDATED":
             return {
                 ...state,
-                post: [action.payload],
+                post: action.payload,
                 error: false,
                 updated: true
             }

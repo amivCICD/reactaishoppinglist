@@ -3,28 +3,14 @@ import { INITIAL_STATE, postReducer } from "../postReducer/postReducer"
 import { ACTION_TYPES } from "../postReducer/actiontypes"
 
 
-// const [list, setList] = useState(null)
+
 
 export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
-    // console.log(itemsArr);
-    const [childState, setChildState] = useState(null)
-    const [array, setArray] = useState()
-    // const [stateChange, setStateChange] = useState(false) // get rid of state changers, postReducer should control state 05/11
-    const [checked, setChecked] = useState(Boolean)
+    
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
-
-    // const handleClick = (e) => {
-    //     let id = e.target.parentElement.parentElement.id;
-    //     // console.log(id);
-
-    //     setChildState(id)
-    //     let filtArr = itemsArr.filter((i, index) => (index + i) !== id)
-    //     // console.log(filtArr);
-    //     localStorage.setItem("item1", filtArr)
-    //     onStateChange(id)
-    // }
-    
+    const [checked, setChecked] = useState(false)
+    let randomId = Math.random().toString().slice(2)
 
     const handleRemove = (e) => {
         let id = e.target.parentElement.parentElement.id
@@ -32,27 +18,19 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
         let index = id
         let groceryItemIndex = itemsArr[index]
 
-        // let updateArray = itemsArr.filter((i, index) => i[index] !== i[groceryItemIndex])
-        // let filtArr = itemsArr.filter((i, index) => (index + i.grocery) !== id)
+        
         let filtArr = itemsArr.filter((i, index) => (i.id) !== id)
-        // let filt2 = itemsArr.filter(i => i[id] !== i)
-        // console.log(filt2);
-        // console.log(updateArray);
+      
         console.log(filtArr, 'filt array in handle remove');
 
-        setCurrentObj(filtArr)
-
-        // if (filtArr.length === 0 && e) {
-        //     localStorage.clear();
-        //     // setStateChange(prev => !prev)
-        //     // onStateChange(stateChange)
-        //     // set ACTION_TYPES.CLEAR_STORAGE
-        // } else {
-        //     localStorage.setObj("groceryListArr", filtArr)
-        //     // setStateChange(prev => !prev)
-        //     // onStateChange(stateChange)
-        //     dispatch({ type : ACTION_TYPES.STATE_UPDATED, payload: filtArr  })
-        // }
+        if (filtArr.length === 0) {
+            filtArr[0] = { grocery: 'Please add a grocery item to proceed...', id: randomId, acquired: false }
+            setCurrentObj({ groceryList: filtArr })
+        } else {
+            setCurrentObj({ groceryList: filtArr })
+            
+        }
+        
 
         
     }
@@ -65,39 +43,30 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
         let whichIndex = el => el.id === id;
         let itemIndex = itemsArr.findIndex(whichIndex)
 
-        
-        
         if (checkedVal) {
-            // setChecked(checked => !checked)
-            console.log(checkedVal);
-            console.log(id);
-            bgDiv.classList.remove("from-primary", "to-success")
-            bgDiv.classList.add("from-gray-800", "to-gray-300")
-            
-            
-            // itemsArr[itemIndex].acquired = checked;
-            itemsArr[itemIndex].acquired = true;
-            console.log(itemsArr[itemIndex].acquired);
+           
+            bgDiv.classList.remove("from-primary", "to-success");
+            bgDiv.classList.add("from-gray-800", "to-gray-300");
+            let updated = {...currentObj}
+            console.log(updated);
+            updated.groceryList[itemIndex].acquired = true
+            setCurrentObj(updated);
 
-            console.log(itemsArr, 'check items arr');
-
-            localStorage.setObj("groceryListArr", itemsArr)
-            // setStateChange(prev => !prev)
-            // onStateChange(stateChange)
+            // dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { ...currentObj } })
+            onStateChange(checkedVal)
+            
         } else if (!checkedVal) {
             
-            bgDiv.classList.remove("from-gray-800", "to-gray-300")
-            bgDiv.classList.add("from-primary", "to-success")
+            bgDiv.classList.remove("from-gray-800", "to-gray-300");
+            bgDiv.classList.add("from-primary", "to-success");
+            let updated = {...currentObj}
+            console.log(updated);
+            updated.groceryList[itemIndex].acquired = false
+            setCurrentObj(updated);
 
+            onStateChange(checkedVal)
+            // dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { post: currentObj } })
 
-            itemsArr[itemIndex].acquired = false;
-            console.log(itemsArr[itemIndex].acquired);
-
-            console.log(itemsArr, 'uncheck items arr');
-
-            localStorage.setObj("groceryListArr", itemsArr)
-            // setStateChange(prev => !prev)
-            // onStateChange(stateChange)
         }
 
             // checkedVal && bgDiv.classList.remove("from-primary", "to-success")
@@ -130,15 +99,16 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
                                         <button 
                                             onClick={handleRemove} 
                                             className=
-                                                {`btn btn-accent btn-sm rounded-1/2 mr-2 font-bold text-xl items-center ${itemsArr[0]?.id === 1969 && 'cursor-not-allowed'}`}
+                                                {`btn btn-accent btn-sm rounded-1/2 mr-2 font-bold text-xl items-center ${itemsArr[0]?.grocery === 'Please add a grocery item to proceed...' && 'hidden'}`}
                                         >
                                         -</button>
                                         {/* <span className="">Got</span> */}
                                         <input className=
-                                            {`checkbox checkbox-primary ml-1 inns ${itemsArr[0]?.id === 1969 && 'cursor-not-allowed'}`} 
-                                            type="checkbox" 
-                                            checked={i.acquired} 
-                                            onChange={handleChange} 
+                                            {`checkbox checkbox-primary ml-1 ${itemsArr[0]?.grocery === 'Please add a grocery item to proceed...' && 'hidden'}`} 
+                                            type="checkbox"
+                                            onChange={handleChange}
+                                            value={i.acquired}
+                                            checked={i.acquired}
                                         />
                                     </div>
                             </div>

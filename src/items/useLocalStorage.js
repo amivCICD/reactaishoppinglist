@@ -4,14 +4,14 @@ import { useState, useEffect } from "react"
 
 export const useLocalStorage = (key, initialValue) => {
     // const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
-    console.log(key);
+    // console.log(key);
     const [storedValue, setStoredValue] = useState(() => {
         try {
             const item = window.localStorage.getObj(key)
             return item ? item : initialValue
 
         } catch (error) {
-            console.log(error)
+            console.log('useLocalStorage error', error)
             return initialValue
         }
     })

@@ -13,21 +13,12 @@ function saveList(listName, itemsArr) {
 
 function retrieveKeys() {
     let localStorageLength = localStorage.length;
-    // if (localStorage.getItem('replaced_stats')) { 
-    //     localStorageLength = localStorage.length - 1; 
-    // } else {
-    //     localStorageLength = localStorage.length;
-    // }
-
     let keys = [];
-
     for (let i=0; i < localStorageLength; i+=1) {
         if (localStorage.key(i) !== 'replaced_stats') {
             keys.push(localStorage.key(i))
         }
-        
     }
-    
     return keys;
 }
 

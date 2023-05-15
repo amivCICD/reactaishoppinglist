@@ -27,11 +27,10 @@ export default () => {
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
     const [parentState, setParentState] = useState(false);
-    const [key] = useState(localStorage.key(0))
-    const [itemsArr, setItemsArr] = useState([]);
-    // const [currentObj, setCurrentObj] = useState({});
-    // const [initialObj, setInitialObj] = useLocalStorage(key, INITIAL_STATE)
-    const [currentObj, setCurrentObj] = useLocalStorage(null, INITIAL_STATE)
+    const [key] = useState(localStorage.key(retrieveKeys()[1]))
+    const [itemsArr, setItemsArr] = useState(['Please add an item to begin...']);
+    
+    const [currentObj, setCurrentObj] = useLocalStorage('groceryList', INITIAL_STATE)
 
     // I believe you need to change your initial_state to be your starting object
     
@@ -213,13 +212,17 @@ export default () => {
     // }, [state.updated])
     
     useEffect(() => {
-        // dispatch({ type: ACTION_TYPES.FETCH_START })
+        const keys = retrieveKeys();
+        const primaryArr = retrievePrimaryArr(keys)
+        console.log(primaryArr);
+
+        console.log(currentObj.groceryList);
         
-        dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: currentObj })
-        setItemsArr(currentObj.groceryList)
+        // dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: currentObj.groceryList })
+        setItemsArr(currentObj.groceryList ? currentObj.groceryList : ['hello'])
         console.log(currentObj);
 
-    }, [currentObj])
+    }, [currentObj, parentState])
     
     
     
@@ -265,14 +268,20 @@ export default () => {
 
         const handleStuff = () => {
             console.log(currentObj);
-            dispatch({ type: ACTION_TYPES.STATE_UPDATED })
+            // dispatch({ type: ACTION_TYPES.STATE_UPDATED })
+            
+            let filt = currentObj.groceryList.filter(i => i.grocery !== 'Please add a grocery item to proceed...')
+            console.log(filt);
+
+
             if (currentObj?.groceryList?.length) {
                 setCurrentObj(
-                    {...currentObj, groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }, ...currentObj.groceryList] }
+                    { groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }, ...filt ] }
                 )
             } else {
+                console.log('is this even making it');
                 setCurrentObj(
-                    {...currentObj, groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }] }
+                    { groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }] }
                 )
             }      
         }

@@ -1,39 +1,10 @@
 import ListItem from "./ListItem"
-import { useEffect } from "react"
-
 
 
 let arr = ["Please add an item to continue..."]
 
 export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
 
-    
-
-    useEffect(() => {
-        if (localStorage.getItem("item1")) {
-            // dispatch({ type: state.STATE_UPDATE })
-            // const items = localStorage.getItem("item1")
-            // let itemsArr = items.split(",") 
-            // setStorage(itemsArr.length > 1 ? ([...itemsArr]) : [itemsArr])
-            // console.log(itemsArr);
-        }
-        // function getLocalStorage() {
-        //     dispatch({ type: ACTION_TYPES.FETCH_START })
-        //     let items = localStorage.getItem("item1")
-        //     if (items) {
-        //         itemsArr = items.split(",")
-        //         dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: itemsArr })
-        //     } else if (!items) {
-        //         dispatch({ type: ACTION_TYPES.FETCH_ERROR })
-        //         items = "Add a grocery item to continue"
-        //         console.log('There is nothing in local storage...');
-        //     }
-        //     return items
-        // }
-        // getLocalStorage();
-        // console.log(state);
-        
-    }, [])
     
     return (
         <div>
