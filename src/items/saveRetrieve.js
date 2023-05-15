@@ -36,6 +36,26 @@ function retrievePrimaryArr(lists) {
     return primaryArr;
 }
 
+function retrievePrimaryArrayKey() {
+    let keys = [];
+    for (let i=0; i < localStorage.length; i+=1) {
+        if (localStorage.key(i) !== 'replaced_stats') {
+            keys.push(localStorage.key(i))
+        }
+    }
+    return function getListsFromKeys(keys) {
+        let len = keys?.length;
+        let listsArr = [];
+        for (let i=0; i < len; i+=1) {
+            if(keys.length !== 0 && keys !== undefined && keys !== 'undefined') listsArr.push(localStorage.getObj(keys[i]))
+        }
+        return function retrievePrimaryObj(listsArr) {
+            let primaryArr = listsArr.filter(i => i.primary === true) // so when true isn't on every array, then we good....
+            return primaryArr;
+        }
+    }
+}
+
 function deleteList(listId) {
     let list = localStorage.getObj(listId)
     console.log(`List ${list.name ? list.name : 'Unnamed List.'} w/ ID: '${list?.id}' has been deleted.`)
@@ -47,5 +67,6 @@ export {
     deleteList,
     retrieveKeys,
     retrieveLists,
-    retrievePrimaryArr
+    retrievePrimaryArr,
+    retrievePrimaryArrayKey
 }

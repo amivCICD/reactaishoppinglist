@@ -8,7 +8,8 @@ export const INITIAL_STATE = {
     post: [],
     error: false,
     groceryList: [{ grocery: 'Please add a grocery item to proceed...', id: randomId, acquired: false }],
-    initial: true
+    initial: true,
+    primary: true
 }
 
  // ^ put -  <post: null> ?
@@ -50,7 +51,6 @@ export const postReducer = (state, action) => { // current state, action updates
         case "STATE_UPDATED":
             return {
                 ...state,
-                post: action.payload,
                 error: false,
                 updated: true
             }

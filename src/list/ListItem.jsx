@@ -52,8 +52,8 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
             updated.groceryList[itemIndex].acquired = true
             setCurrentObj(updated);
 
-            // dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { ...currentObj } })
-            onStateChange(checkedVal)
+            dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { ...currentObj } })
+            // onStateChange(checkedVal)
             
         } else if (!checkedVal) {
             
@@ -64,8 +64,8 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
             updated.groceryList[itemIndex].acquired = false
             setCurrentObj(updated);
 
-            onStateChange(checkedVal)
-            // dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { post: currentObj } })
+            // onStateChange(checkedVal)
+            dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { ...currentObj } })
 
         }
 

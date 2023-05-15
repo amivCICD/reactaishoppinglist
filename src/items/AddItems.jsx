@@ -4,8 +4,10 @@ import { ACTION_TYPES } from "../postReducer/actiontypes";
 import List from "../list/List";
 import SaveList from "./subcomponents/SaveList";
 import ViewLists from "./subcomponents/ViewLists";
-import { deleteList, retrieveKeys, retrieveLists, retrievePrimaryArr, saveList } from "./saveRetrieve";
+import { deleteList, retrieveKeys, retrieveLists, retrievePrimaryArr, saveList, retrievePrimaryArrayKey } from "./saveRetrieve";
 import { useLocalStorage } from "./useLocalStorage";
+import { useRetrieveKeys } from "./useRetrieveKeys";
+
 
 
 // notes 6:57 P.M. - you are leaving off where we are setting local storage items, now we just need to fetch them,
@@ -27,8 +29,11 @@ export default () => {
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
     const [parentState, setParentState] = useState(false);
-    const [key] = useState(localStorage.key(retrieveKeys()[1]))
+    const [keys, setKeys] = useState(null)
     const [itemsArr, setItemsArr] = useState(['Please add an item to begin...']);
+    let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
+
+    const [initialKey, setInitialKey] = useRetrieveKeys(pak)
     
     const [currentObj, setCurrentObj] = useLocalStorage('groceryList', INITIAL_STATE)
 
@@ -212,15 +217,17 @@ export default () => {
     // }, [state.updated])
     
     useEffect(() => {
-        const keys = retrieveKeys();
-        const primaryArr = retrievePrimaryArr(keys)
-        console.log(primaryArr);
-
-        console.log(currentObj.groceryList);
+        let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
+        console.log('PAK ', pak); // ideally...we need to have this return 1 key from a filt array
+        
+        console.log(currentObj);
+        
         
         // dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: currentObj.groceryList })
         setItemsArr(currentObj.groceryList ? currentObj.groceryList : ['hello'])
         console.log(currentObj);
+
+        console.log(initialKey);
 
     }, [currentObj, parentState])
     
@@ -340,7 +347,7 @@ export default () => {
         </div>
         <List itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} onStateChange={handleStateChange} />
         <div className="flex items-center justify-center mt-2">
-            <SaveList itemsArr={itemsArr} currentObj={currentObj} />
+            <SaveList itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} />
             <ViewLists />
         </div>
         </>
