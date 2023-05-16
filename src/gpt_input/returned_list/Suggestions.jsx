@@ -1,19 +1,48 @@
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
 
 export default ({ aiReply, initialQuery }) => {
     // console.log(aiReply?.content)
     // let shoppingList = aiReply?.split('\n')
+    const [aiObj, setAiObj] = useState([])
 
-    const aiReply2 = [1,2,3,4];
+    // const aiReplyList = ai?.reply?.split('\n')
+
+    function makeNewObj(arr) {
+        const newArr = arr.map((i) => {
+            let randomId = Math.random().toString().slice(2);
+            return {
+                grocery: i,
+                id: randomId,
+                acquired: false,
+            }
+        })
+        return newArr;
+    }
+    // console.log(makeNewObj(aiReplyList));
 
     useEffect(() => {
-
+        
         // console.log('aireply as props ', aiReply);
         // console.log('aireply.reply ', aiReply?.reply);
-        let arr = aiReply?.reply.split('\n')
-        // console.log(arr);
+        
+        if (aiReply) {
+            let arr = aiReply?.reply.split('\n')
+            let itemized = makeNewObj(arr)
+            setAiObj(itemized)
+            console.log(itemized);
+        }
         
     }, [aiReply])
+
+    const handleClick = (e) => {
+
+
+    }
+
+    const handleAddToList = () => {
+
+    }
 
     return (
         <>
@@ -22,12 +51,31 @@ export default ({ aiReply, initialQuery }) => {
             <h1 className="text-left text-4xl p-4 pt-2">ChatGPT suggested items:</h1>
                 <ul className="m-2">
                     {
-                    aiReply?.reply.split('\n').map((i) => {
-                        return <li className="text-center text-success font-bold">{i}<a className="text-3xl text-warning ml-2">+</a></li>
+            aiObj && aiObj?.map((i) => {
+                        return (
+                            <li 
+                                className="text-center text-success font-bold"
+                                key={i.id}
+                            >
+                                    {i.grocery}
+                                <a 
+                                    className="text-3xl text-warning ml-2"
+                                    id={i.id}    
+                                    onClick={handleClick}
+                                >
+                                    +
+                                </a>
+                            </li>
+                        )
                     }) 
                     }
                 </ul>
-                <button className="m-4 p-4 border border-dashed border-accent font-bold rounded-lg hover:bg-primary">Add this list to existing list</button>
+                <button 
+                    className="m-4 p-4 border border-dashed border-accent font-bold rounded-lg hover:bg-primary"
+                    onClick={handleAddToList}
+                >
+                    Add this list to existing list
+                </button>
             </div>
         }
         </>
