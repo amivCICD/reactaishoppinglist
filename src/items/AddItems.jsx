@@ -35,8 +35,9 @@ export default () => {
 
     const [initialKey, setInitialKey] = useRetrieveKeys(pak)
     
-    const [currentObj, setCurrentObj] = useLocalStorage('groceryList', INITIAL_STATE)
-
+    const [currentObj, setCurrentObj] = useLocalStorage(null, INITIAL_STATE)
+    // const [listNames, setListNames] = useRetrieveKeys()
+    const [listNames, setListNames] = useState([])
     // I believe you need to change your initial_state to be your starting object
     
 
@@ -218,17 +219,37 @@ export default () => {
     
     useEffect(() => {
         let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
-        console.log('PAK ', pak); // ideally...we need to have this return 1 key from a filt array
-        
-        console.log(currentObj);
-        
-        
-        // dispatch({ type: ACTION_TYPES.FETCH_SUCCESS, payload: currentObj.groceryList })
-        setItemsArr(currentObj.groceryList ? currentObj.groceryList : ['hello'])
-        console.log(currentObj);
+        const keys = retrieveKeys();
+       console.log('currentObj ', currentObj);
+       function getObjCount() {
+            let arr = [];
+            let len = localStorage.length
 
-        console.log(initialKey);
-
+            for (let i=0; i<len; i+=1) {
+                if (localStorage.key(i) !== 'replaced_stats') {
+                    arr.push(localStorage.key(i))
+                }
+            }
+            console.log(arr);
+            return arr;
+        }
+        function objNamesList(arrayOfKeys) {
+            if (arrayOfKeys.length === 0) return;
+            let namesArr = [];
+            for (let i=0; i<arrayOfKeys.length; i+=1) {
+                namesArr.push(localStorage.getObj(arrayOfKeys[i]))
+            }
+            console.log(namesArr);
+            return namesArr;
+        }
+        setListNames(objNamesList(getObjCount()))
+        // console.log(objNamesList(getObjCount()));
+        // setListNames(objNamesList(getObjCount()))
+        
+        
+        
+        setItemsArr(currentObj?.groceryList)
+        
     }, [currentObj, parentState])
     
     
@@ -240,6 +261,7 @@ export default () => {
     const handleClick = () => {
         if (document.querySelector('.groceryInput').value === '') return;
         let groceryId = Math.random().toString().slice(2);
+        let objId = Math.random().toString().slice(2);
         
         // if(itemsArr[0].id === undefined) itemsArr[0].id = id; // I believe this is redundant
         // console.log(itemsArr[0]);
@@ -278,17 +300,16 @@ export default () => {
             // dispatch({ type: ACTION_TYPES.STATE_UPDATED })
             
             let filt = currentObj.groceryList.filter(i => i.grocery !== 'Please add a grocery item to proceed...')
-            console.log(filt);
-
-
+            
             if (currentObj?.groceryList?.length) {
                 setCurrentObj(
-                    { groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }, ...filt ] }
+                    { ...currentObj, groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }, ...filt ] }
                 )
+                localStorage.setObj(currentObj.id, currentObj)
             } else {
                 console.log('is this even making it');
                 setCurrentObj(
-                    { groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }] }
+                    { ...currentObj, groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }] }
                 )
             }      
         }
@@ -348,7 +369,7 @@ export default () => {
         <List itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} onStateChange={handleStateChange} />
         <div className="flex items-center justify-center mt-2">
             <SaveList itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} />
-            <ViewLists />
+            <ViewLists currentObj={currentObj} itemsArr={itemsArr} listNames={listNames} />
         </div>
         </>
     )

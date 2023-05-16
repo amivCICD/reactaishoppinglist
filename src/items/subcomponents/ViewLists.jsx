@@ -1,12 +1,12 @@
 
 import ViewDialog from "./viewDialog/ViewDialog";
 
-export default () => {
+export default ({ currentObj, listNames, itemsArr }) => {
 
 
     return (
         <>
-            <ViewDialog />
+            <ViewDialog currentObj={currentObj} itemsArr={itemsArr} listNames={listNames} />
         </>
     )
 }

@@ -3,11 +3,8 @@ import { INITIAL_STATE, postReducer } from "../postReducer/postReducer"
 import { ACTION_TYPES } from "../postReducer/actiontypes"
 
 
-
-
 export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
     
-
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
     const [checked, setChecked] = useState(false)
     let randomId = Math.random().toString().slice(2)
@@ -25,13 +22,10 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
 
         if (filtArr.length === 0) {
             filtArr[0] = { grocery: 'Please add a grocery item to proceed...', id: randomId, acquired: false }
-            setCurrentObj({ groceryList: filtArr })
+            setCurrentObj({ ...currentObj, groceryList: filtArr })
         } else {
-            setCurrentObj({ groceryList: filtArr })
-            
+            setCurrentObj({...currentObj, groceryList: filtArr })
         }
-        
-
         
     }
 
@@ -47,7 +41,7 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
            
             bgDiv.classList.remove("from-primary", "to-success");
             bgDiv.classList.add("from-gray-800", "to-gray-300");
-            let updated = {...currentObj}
+            let updated = { ...currentObj }
             console.log(updated);
             updated.groceryList[itemIndex].acquired = true
             setCurrentObj(updated);
@@ -59,27 +53,19 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
             
             bgDiv.classList.remove("from-gray-800", "to-gray-300");
             bgDiv.classList.add("from-primary", "to-success");
-            let updated = {...currentObj}
+            let updated = { ...currentObj }
             console.log(updated);
             updated.groceryList[itemIndex].acquired = false
             setCurrentObj(updated);
 
-            // onStateChange(checkedVal)
             dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { ...currentObj } })
 
         }
 
-            // checkedVal && bgDiv.classList.remove("from-primary", "to-success")
-            // checkedVal && bgDiv.classList.add("from-gray-800", "to-gray-300")
-            // !checkedVal && bgDiv.classList.remove("from-gray-800", "to-gray-300")
-            // !checkedVal && bgDiv.classList.add("from-primary", "to-success")
-
-        // onStateChange(checked)
-        // console.log(e.target.parentElement.parentElement);
     }
 
     useEffect(() => {
-        // setArray(itemsArr)
+        
  
     }, [state.STATE_UPDATED])
     
@@ -102,7 +88,7 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
                                                 {`btn btn-accent btn-sm rounded-1/2 mr-2 font-bold text-xl items-center ${itemsArr[0]?.grocery === 'Please add a grocery item to proceed...' && 'hidden'}`}
                                         >
                                         -</button>
-                                        {/* <span className="">Got</span> */}
+                                        
                                         <input className=
                                             {`checkbox checkbox-primary ml-1 ${itemsArr[0]?.grocery === 'Please add a grocery item to proceed...' && 'hidden'}`} 
                                             type="checkbox"

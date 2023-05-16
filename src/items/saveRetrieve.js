@@ -50,7 +50,7 @@ function retrievePrimaryArrayKey() {
             if(keys.length !== 0 && keys !== undefined && keys !== 'undefined') listsArr.push(localStorage.getObj(keys[i]))
         }
         return function retrievePrimaryObj(listsArr) {
-            let primaryArr = listsArr.filter(i => i.primary === true) // so when true isn't on every array, then we good....
+            let primaryArr = listsArr?.filter(i => i?.primary === true) // so when true isn't on every array, then we good....
             return primaryArr;
         }
     }

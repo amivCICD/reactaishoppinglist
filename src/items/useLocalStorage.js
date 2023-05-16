@@ -1,37 +1,46 @@
 import { useState, useEffect } from "react"
-import { retrieveKeys } from "./saveRetrieve"
+import { retrieveKeys, retrieveLists, retrievePrimaryArrayKey } from "./saveRetrieve"
+
 
 
 
 export const useLocalStorage = (key, initialValue) => {
     // const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
     // console.log(key);
-
+    let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
+    // pak.length > 1 ? pak = pak.slice(1) : pak
+    // console.log('pak ', pak, pak.length);
+    
+    let primaryArrKey = pak[0]?.id
     // this thing should fetch the key you need, not have it implemented?
-    const keys = retrieveKeys();
-    const [keyz, setKeyz] = useState(keys)
-
-    if (!keys) {
-
-    }
-
+    
+    // console.log(primaryArrKey);
+    
+    
+    
+    
     const [storedValue, setStoredValue] = useState(() => { // this is doing MORE things TO set the state,but u can still just set the state
         try {
-            const item = window.localStorage.getObj(key)
+            const item = window.localStorage.getObj(primaryArrKey)
+           
             return item ? item : initialValue
 
         } catch (error) {
-            console.log('useLocalStorage error', error)
+            console.log('useLocalStorage error ', error)
             return initialValue
         }
     })
     useEffect(() => {
+        const item = window.localStorage.getObj(primaryArrKey)
         try {
-            window.localStorage.setObj(key, storedValue)
+            if(item) {
+                console.log('item!!!!! ', item);
+                window.localStorage.setObj(primaryArrKey, storedValue)
+            }
         } catch (error) {
             console.log(error);
         }
-    }, [key, storedValue])
+    }, [primaryArrKey, storedValue])
 
     return [storedValue, setStoredValue]
 }

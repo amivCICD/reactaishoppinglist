@@ -7,38 +7,22 @@ import { ACTION_TYPES } from "../../postReducer/actiontypes";
 export default ({ itemsArr, currentObj, setCurrentObj }) => {
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
-    const [keys, setKeys] = useState()
+    const [keys, setKeys] = useState(null)
 
-    useEffect(() => {
-        let keys = retrieveKeys();
-        console.log('keys ', keys);
-
-        setKeys(keys)
-    }, [state.STATE_UPDATED])
+    useEffect(() => { console.log('useEffect in SaveList'); }, [state.STATE_UPDATED])
     
 
     const handleAddListName = () => {
-        let randomId = Math.random().toString().slice(2)
-
-        if (keys.length === 1) {
-
-        }
-
-        let updated = { name: state.shoppingListName, id: randomId, primary: true, ...currentObj };
+        let updated = { ...currentObj, name: state.shoppingListName, primary: true };
         console.log(updated);
-        setCurrentObj(updated)
-
-       
-
-        dispatch({ type: ACTION_TYPES.STATE_UPDATED })
+        setCurrentObj(updated);
+        localStorage.setObj(currentObj.id, currentObj)
+        dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { updated: true } })
         document.querySelector('#nameListDialog').close();
     }
 
     const handleDialogInput = (e) => {
-        
         dispatch({ type: ACTION_TYPES.CHANGE_INPUT, payload: { name: e.target.name, value: e.target.value } })
-        console.log(state);
-        
     }
 
     const handleDialogOpen = () => { // open dialog
