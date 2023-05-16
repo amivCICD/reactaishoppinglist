@@ -36,15 +36,16 @@ export default ({ itemsArr, currentObj, setCurrentObj }) => {
                 mr-5
                 "
                 onClick={handleDialogOpen}
-            >Save List</a>
+            >
+                Save List
+            </a>
             <dialog id="nameListDialog" className="w-3/4 h-1/3 p-0 rounded-md">
                 <div className="bg-neutral flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-white">
                     <a className="btn btn-warning absolute left-[75%] top-4 font-bold text-lg" onClick={() => document.querySelector('#nameListDialog').close()}>X</a>
                     <label className="text-white mb-2">Name this shopping list</label>
-                    <input type="text" name="shoppingListName" placeholder={state.shoppingListName ? state.shoppingListName : ''} onChange={handleDialogInput} />
+                    <input type="text" name="shoppingListName" placeholder={'e.g. snack list, produce list...'} onChange={handleDialogInput} />
                     <a className="btn btn-primary m-3" onClick={handleAddListName}>Add</a>
                 </div>
-                
             </dialog>
         </>
     )
