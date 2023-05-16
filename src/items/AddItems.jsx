@@ -7,6 +7,8 @@ import ViewLists from "./subcomponents/ViewLists";
 import { deleteList, retrieveKeys, retrieveLists, retrievePrimaryArr, saveList, retrievePrimaryArrayKey } from "./saveRetrieve";
 import { useLocalStorage } from "./useLocalStorage";
 import { useRetrieveKeys } from "./useRetrieveKeys";
+import { getObjCount, objNamesList } from "./functions/objectNamesList";
+import NewList from "./subcomponents/NewList";
 
 
 
@@ -19,7 +21,6 @@ import { useRetrieveKeys } from "./useRetrieveKeys";
 
 
 export default () => {
-
     Storage.prototype.setObj = function(key, obj) {
         return this.setItem(key, JSON.stringify(obj));
     }
@@ -27,15 +28,16 @@ export default () => {
         return JSON.parse(this.getItem(key))
     }
 
+    
+
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
     const [parentState, setParentState] = useState(false);
-    const [keys, setKeys] = useState(null)
     const [itemsArr, setItemsArr] = useState(['Please add an item to begin...']);
     let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
 
     const [initialKey, setInitialKey] = useRetrieveKeys(pak)
     
-    const [currentObj, setCurrentObj] = useLocalStorage(null, INITIAL_STATE)
+    const [currentObj, setCurrentObj] = useLocalStorage(pak, INITIAL_STATE)
     // const [listNames, setListNames] = useRetrieveKeys()
     const [listNames, setListNames] = useState([])
     // I believe you need to change your initial_state to be your starting object
@@ -218,37 +220,13 @@ export default () => {
     // }, [state.updated])
     
     useEffect(() => {
-        let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
-        const keys = retrieveKeys();
+        
        console.log('currentObj ', currentObj);
-       function getObjCount() {
-            let arr = [];
-            let len = localStorage.length
-
-            for (let i=0; i<len; i+=1) {
-                if (localStorage.key(i) !== 'replaced_stats') {
-                    arr.push(localStorage.key(i))
-                }
-            }
-            console.log(arr);
-            return arr;
-        }
-        function objNamesList(arrayOfKeys) {
-            if (arrayOfKeys.length === 0) return;
-            let namesArr = [];
-            for (let i=0; i<arrayOfKeys.length; i+=1) {
-                namesArr.push(localStorage.getObj(arrayOfKeys[i]))
-            }
-            console.log(namesArr);
-            return namesArr;
-        }
-        setListNames(objNamesList(getObjCount()))
-        // console.log(objNamesList(getObjCount()));
+       
         // setListNames(objNamesList(getObjCount()))
-        
-        
-        
-        setItemsArr(currentObj?.groceryList)
+        // console.log(objNamesList(getObjCount()));
+        setListNames(objNamesList(getObjCount()));
+        setItemsArr(currentObj?.groceryList);
         
     }, [currentObj, parentState])
     
@@ -370,7 +348,9 @@ export default () => {
         <div className="flex items-center justify-center mt-2">
             <SaveList itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} />
             <ViewLists currentObj={currentObj} itemsArr={itemsArr} listNames={listNames} />
+            <NewList currentObj={currentObj} setCurrentObj={setCurrentObj} handleStateChange={handleStateChange} />
         </div>
         </>
     )
 }
+

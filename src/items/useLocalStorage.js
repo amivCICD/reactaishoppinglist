@@ -10,20 +10,20 @@ export const useLocalStorage = (key, initialValue) => {
     let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
     // pak.length > 1 ? pak = pak.slice(1) : pak
     // console.log('pak ', pak, pak.length);
-    
-    let primaryArrKey = pak[0]?.id
+    console.log('key ', key);
+    let primaryArrKey = key[0]?.id
     // this thing should fetch the key you need, not have it implemented?
     
     // console.log(primaryArrKey);
-    
-    
-    
-    
+  
     const [storedValue, setStoredValue] = useState(() => { // this is doing MORE things TO set the state,but u can still just set the state
         try {
             const item = window.localStorage.getObj(primaryArrKey)
+
+            console.log('item fired', item);
            
             return item ? item : initialValue
+            // return primaryArrKey?.length > 0 ? item : initialValue
 
         } catch (error) {
             console.log('useLocalStorage error ', error)
@@ -32,9 +32,9 @@ export const useLocalStorage = (key, initialValue) => {
     })
     useEffect(() => {
         const item = window.localStorage.getObj(primaryArrKey)
+        console.log(item);
         try {
             if(item) {
-                console.log('item!!!!! ', item);
                 window.localStorage.setObj(primaryArrKey, storedValue)
             }
         } catch (error) {

@@ -7,9 +7,8 @@ import { ACTION_TYPES } from "../../postReducer/actiontypes";
 export default ({ itemsArr, currentObj, setCurrentObj }) => {
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
-    const [keys, setKeys] = useState(null)
 
-    useEffect(() => { console.log('useEffect in SaveList'); }, [state.STATE_UPDATED])
+    useEffect(() => {  }, [state.STATE_UPDATED])
     
 
     const handleAddListName = () => {
@@ -42,7 +41,7 @@ export default ({ itemsArr, currentObj, setCurrentObj }) => {
                 <div className="bg-neutral flex flex-col items-center justify-center w-full h-full border-2 border-dashed border-white">
                     <a className="btn btn-warning absolute left-[75%] top-4 font-bold text-lg" onClick={() => document.querySelector('#nameListDialog').close()}>X</a>
                     <label className="text-white mb-2">Name this shopping list</label>
-                    <input type="text" name="shoppingListName" placeholder={state.shoppingListName ? state.shoppingListName : keys} onChange={handleDialogInput} />
+                    <input type="text" name="shoppingListName" placeholder={state.shoppingListName ? state.shoppingListName : ''} onChange={handleDialogInput} />
                     <a className="btn btn-primary m-3" onClick={handleAddListName}>Add</a>
                 </div>
                 

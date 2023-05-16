@@ -18,10 +18,10 @@ export default ({ currentObj, itemsArr, listNames }) => {
         const keys = retrieveKeys();
         const allLists = retrieveLists(keys)
         // console.log('keys from ViewLists', keys);
-        console.log('retrieved lists', allLists);
+        // console.log('retrieved lists', allLists);
         // setLists(allLists)
         
-        console.log('listNames in ViewDialog', listNames);
+        // console.log('listNames in ViewDialog', listNames);
         // setListNames(allLists)
 
         // console.log('IS THIS RE RENDERING ON OPEN DIALOG CLICK');
@@ -32,8 +32,6 @@ export default ({ currentObj, itemsArr, listNames }) => {
 
     const openDialog = () => {
         // dispatch({ type: ACTION_TYPES.STATE_UPDATED }) // this was fucking things up
-        
-        
         // dispatch({ type: ACTION_TYPES.STATE_UPDATED })
         document.querySelector('#listsDialog').showModal();
     }
@@ -59,7 +57,7 @@ export default ({ currentObj, itemsArr, listNames }) => {
                     <ul className="text-white inline-block p-4">
                         {listNames?.length > 0 && listNames?.map((list, i) => {
                             // <li className="text-white z-50" key={list?.id ? list.id : list.name}>{list?.name}</li>
-                            return <li key={list.id ? list.id : i} className="text-secondary p-2 font-bold flex items-center justify-center">
+                            return <li key={list?.id ? list?.id : i} className="text-secondary p-2 font-bold flex items-center justify-center">
                                         <button className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2 mr-4">&#9850;</button>
                                         <p className="mr-4">{list?.name ? list?.name : list?.id}</p>
                                         <a className="btn btn-circle btn-outline ml-auto text-accent hover:bg-transparent hover:text-success-content">Load</a>

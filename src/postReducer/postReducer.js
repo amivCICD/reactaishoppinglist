@@ -2,12 +2,16 @@
 const starterId = Math.random().toString().slice(2);
 const randomId = Math.random().toString().slice(2);
 
+function generateRandomId() {
+    return Math.random().toString().slice(2);
+}
+
 
 export const INITIAL_STATE = {
-    id: starterId,
+    id: generateRandomId(),
     primary: true,
     name: '',
-    groceryList: [{ grocery: 'Please add a grocery item to proceed...', id: randomId, acquired: false }],
+    groceryList: [{ grocery: 'Please add a grocery item to proceed...', id: generateRandomId(), acquired: false }],
 }
 
  // ^ put -  <post: null> ?
@@ -51,6 +55,10 @@ export const postReducer = (state, action) => { // current state, action updates
                 ...state,
                 error: false,
                 updated: false
+            }
+        case "NEW_STATE":
+            return {
+                
             }
         case "CHANGE_INPUT":
             return {

@@ -11,7 +11,7 @@ export const useRetrieveKeys = () => {
                     arr.push(localStorage.key(i))
                 }
             }
-            console.log(arr);
+            // console.log(arr);
             return arr;
         }
         function objNamesList(arrayOfKeys) {
@@ -20,7 +20,7 @@ export const useRetrieveKeys = () => {
             for (let i=0; i<arrayOfKeys.length; i+=1) {
                 namesArr.push(localStorage.getObj(arrayOfKeys[i]))
             }
-            console.log(namesArr);
+            // console.log(namesArr);
             return namesArr;
         }
         
@@ -35,7 +35,7 @@ export const useRetrieveKeys = () => {
     // console.log('use Retrieve Keys!');
     useEffect(() => {
         try {
-            console.log(listNames.forEach(i => console.log('i.name: ', i.name)));
+            // console.log(listNames.forEach(i => console.log('i.name: ', i.name)));
         }catch(err){
             console.log(err);
         }
