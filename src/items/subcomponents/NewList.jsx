@@ -49,7 +49,7 @@ export default ({ currentObj, setCurrentObj, handleStateChange }) => {
     return (
         <>
             <a 
-                className="btn btn-primary btn-outline btn-circle ml-2"
+                className="btn btn-primary btn-outline btn-circle ml-5"
                 onClick={handleClick}
             >
                 New List

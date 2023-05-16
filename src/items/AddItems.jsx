@@ -345,9 +345,9 @@ export default () => {
             </div>
         </div>
         <List itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} onStateChange={handleStateChange} />
-        <div className="flex items-center justify-center mt-2">
+        <div className="flex items-center justify-center my-5">
             <SaveList itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} />
-            <ViewLists currentObj={currentObj} itemsArr={itemsArr} listNames={listNames} />
+            <ViewLists currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} />
             <NewList currentObj={currentObj} setCurrentObj={setCurrentObj} handleStateChange={handleStateChange} />
         </div>
         </>

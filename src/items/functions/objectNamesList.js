@@ -19,9 +19,18 @@ function objNamesList(arrayOfKeys) {
     
     return namesArr;
 }
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~above work in conjunction junction, what's their function()?
+
+function updateObjectPrimary(selectedObj, Boolean) {
+    let objCopy = { ...selectedObj }
+    objCopy.primary = Boolean;
+    let item = localStorage.setObj(objCopy.id, objCopy);
+    return item;
+}
 
 export {
     getObjCount,
-    objNamesList
+    objNamesList,
+    updateObjectPrimary
 }
 

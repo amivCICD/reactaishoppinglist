@@ -3,9 +3,10 @@ import { INITIAL_STATE, postReducer } from "../../../postReducer/postReducer";
 import { ACTION_TYPES } from "../../../postReducer/actiontypes";
 import { retrieveKeys, retrieveLists } from "../../saveRetrieve"
 import { useRetrieveKeys } from "../../useRetrieveKeys";
+import { updateObjectPrimary } from "../../functions/objectNamesList";
 
 
-export default ({ currentObj, itemsArr, listNames }) => {
+export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
     const [lists, setLists] = useState([]);
@@ -20,7 +21,7 @@ export default ({ currentObj, itemsArr, listNames }) => {
         // console.log('keys from ViewLists', keys);
         // console.log('retrieved lists', allLists);
         // setLists(allLists)
-        
+        console.log(listNames);
         // console.log('listNames in ViewDialog', listNames);
         // setListNames(allLists)
 
@@ -31,10 +32,35 @@ export default ({ currentObj, itemsArr, listNames }) => {
     }, [state.STATE_UPDATED])
 
     const openDialog = () => {
-        // dispatch({ type: ACTION_TYPES.STATE_UPDATED }) // this was fucking things up
-        // dispatch({ type: ACTION_TYPES.STATE_UPDATED })
         document.querySelector('#listsDialog').showModal();
     }
+    const handleLoadLists = (e) => {
+        console.log(e.target.id);
+        console.log('list namesssssss ', listNames);
+        let copyOfCurrentObj = { ...currentObj }
+        copyOfCurrentObj.primary = false;
+        localStorage.setObj(copyOfCurrentObj.id, copyOfCurrentObj);
+
+
+        // loading symbol in here somewhere
+        let selectedList = listNames.filter(i => i.id === e.target.id);
+        console.log(selectedList);
+        let copy = selectedList[0]
+        copy.primary = true;
+        localStorage.setObj(selectedList[0].id, { ...copy })
+        setCurrentObj(copy)
+
+        
+        document.querySelector('#listsDialog').close();
+       
+    //    updateObjectPrimary(currentObj, true) 
+    }
+    // function updateObjectPrimary(selectedObj, Boolean) {
+    //     let objCopy = { ...selectedObj }
+    //     objCopy.primary = Boolean;
+    //     let item = localStorage.setObj(objCopy.id, objCopy);
+    //     return item;
+    // }
    
 
 
@@ -60,7 +86,13 @@ export default ({ currentObj, itemsArr, listNames }) => {
                             return <li key={list?.id ? list?.id : i} className="text-secondary p-2 font-bold flex items-center justify-center">
                                         <button className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2 mr-4">&#9850;</button>
                                         <p className="mr-4">{list?.name ? list?.name : list?.id}</p>
-                                        <a className="btn btn-circle btn-outline ml-auto text-accent hover:bg-transparent hover:text-success-content">Load</a>
+                                        <a 
+                                            className="btn btn-circle btn-outline ml-auto text-accent hover:bg-transparent hover:text-success-content"
+                                            onClick={handleLoadLists}
+                                            id={list.id}
+                                        >
+                                            Load
+                                        </a>
                                     </li>
                         })}
                         

@@ -33,7 +33,7 @@ export default ({ itemsArr, currentObj, setCurrentObj }) => {
             <a className="
                 btn bg-transparent border 
                 border-dashed border-warning
-                mr-2
+                mr-5
                 "
                 onClick={handleDialogOpen}
             >Save List</a>
