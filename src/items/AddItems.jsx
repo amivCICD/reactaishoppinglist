@@ -9,6 +9,7 @@ import { useLocalStorage } from "./useLocalStorage";
 import { useRetrieveKeys } from "./useRetrieveKeys";
 import { getObjCount, objNamesList } from "./functions/objectNamesList";
 import NewList from "./subcomponents/NewList";
+import GPTInput from "../gpt_input/GPTInput";
 
 
 
@@ -20,7 +21,7 @@ import NewList from "./subcomponents/NewList";
 // update: 8:10 am 03 17 2023 - just dispatch a re-render to the list component, see what happens
 
 
-export default () => {
+export default ({ appState }) => {
     Storage.prototype.setObj = function(key, obj) {
         return this.setItem(key, JSON.stringify(obj));
     }
@@ -222,13 +223,14 @@ export default () => {
     useEffect(() => {
         
        console.log('currentObj ', currentObj);
+       console.log('hello from Add items');
        
         // setListNames(objNamesList(getObjCount()))
         // console.log(objNamesList(getObjCount()));
         setListNames(objNamesList(getObjCount()));
         setItemsArr(currentObj?.groceryList);
         
-    }, [currentObj, parentState])
+    }, [currentObj, parentState, appState])
     
     
     
@@ -349,6 +351,9 @@ export default () => {
             <SaveList itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} />
             <ViewLists currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} />
             <NewList currentObj={currentObj} setCurrentObj={setCurrentObj} handleStateChange={handleStateChange} />
+        </div>
+        <div className="h-52">
+            <GPTInput handleStateChange={handleStateChange} currentObj={currentObj} setCurrentObj={setCurrentObj} />
         </div>
         </>
     )

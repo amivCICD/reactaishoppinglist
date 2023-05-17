@@ -3,15 +3,30 @@ import Suggestions from "./returned_list/Suggestions";
 
 
 
-export default () => {
+export default ({ handleStateChange, currentObj, setCurrentObj }) => {
     const [val, setVal] = useState("");
     const [aiReply, setAiReply] = useState(null);
-    const [initialQuery, setInitialQuery] = useState(null)
+    const [initialQuery, setInitialQuery] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [temporaryArr, setTemporaryArr] = useState(null);
+    const [newQuery, setNewQuery] = useState(false);
+    
 
     useEffect(() => {
         // console.log('use effect aiReply', aiReply);
+        // if (temporaryArr) {
+        //     setLoading(false)
+        // }
+        if (aiReply) {
+            setLoading(false)
+            setNewQuery(false)
+        }
+
+        return () => {
+            setAiReply(null)
+        }
         
-    }, [aiReply])
+    }, [aiReply, temporaryArr])
 
     const sendPost = (data) => {
         fetch('/api/chat', {
@@ -32,11 +47,29 @@ export default () => {
     }
 
     const handleClick = (e) => {
-        e.preventDefault();
+        if (val === '') return
+        // put a toast here
+        // e.preventDefault();
         // console.log(val)
-        sendPost(val)
-        setInitialQuery(val)
-        setVal("")
+        sendPost(val);
+        setInitialQuery(val);
+        setVal("");
+        setLoading(true);
+        setNewQuery(true)
+
+        // const delay = t => new Promise(res => setTimeout(res, t))
+        // let a = [
+        //     { grocery: "1. Pancakes", id: "21763197644368582", acquired: false },
+        //     { grocery: "2. Eggs Benedict", id: "4873629478220246", acquired: false },
+        //     { grocery: "3. Omelette", id: "6121841401056611", acquired: false },
+        //     { grocery: "4. Breakfast burrito", id: "6023997791160589", acquired: false },
+        //     { grocery: "5. French toast", id: "2899951377158482", acquired: false }
+        // ]
+        // delay(1000).then(() => setTemporaryArr(a))
+            
+
+        
+        
     }
 
 
@@ -60,7 +93,17 @@ export default () => {
                 >Submit</a>
             </div>
             <div className="flex items-center justify-center">
-                <Suggestions aiReply={aiReply} initialQuery={initialQuery} />
+                <Suggestions 
+                    aiReply={aiReply} 
+                    initialQuery={initialQuery} 
+                    temporaryArr={temporaryArr} 
+                    loading={loading} 
+                    handleStateChange={handleStateChange} 
+                    currentObj={currentObj}
+                    setCurrentObj={setCurrentObj}
+                    newQuery={newQuery}
+                />
+                
             </div>
         </>
     )

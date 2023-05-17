@@ -19,7 +19,18 @@ module.exports = {
   },
   content: ["./src/**/*.{html,js,jsx}"],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        "reverse-spin" : "reverse-spin 1s linear infinite"
+      },
+      keyframes: {
+        "reverse-spin" : {
+          from: {
+            transform: 'rotate(360deg)'
+          }
+        }
+      }
+    },
   },
   plugins: [require("@tailwindcss/typography"), require("daisyui")],
 }

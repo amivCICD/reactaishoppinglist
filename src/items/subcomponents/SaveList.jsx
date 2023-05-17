@@ -13,7 +13,7 @@ export default ({ itemsArr, currentObj, setCurrentObj }) => {
 
     const handleAddListName = () => {
         let updated = { ...currentObj, name: state.shoppingListName, primary: true };
-        console.log(updated);
+        console.log('list name updated ', updated);
         setCurrentObj(updated);
         localStorage.setObj(currentObj.id, currentObj)
         dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { updated: true } })

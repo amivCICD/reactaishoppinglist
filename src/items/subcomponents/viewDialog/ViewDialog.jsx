@@ -21,7 +21,7 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
         // console.log('keys from ViewLists', keys);
         // console.log('retrieved lists', allLists);
         // setLists(allLists)
-        console.log(listNames);
+        // console.log(listNames);
         // console.log('listNames in ViewDialog', listNames);
         // setListNames(allLists)
 
@@ -35,8 +35,8 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
         document.querySelector('#listsDialog').showModal();
     }
     const handleLoadLists = (e) => {
-        console.log(e.target.id);
-        console.log('list namesssssss ', listNames);
+        // console.log(e.target.id);
+        // console.log('list namesssssss ', listNames);
         let copyOfCurrentObj = { ...currentObj }
         copyOfCurrentObj.primary = false;
         localStorage.setObj(copyOfCurrentObj.id, copyOfCurrentObj);
@@ -44,7 +44,7 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
 
         // loading symbol in here somewhere
         let selectedList = listNames.filter(i => i.id === e.target.id);
-        console.log(selectedList);
+        // console.log(selectedList);
         let copy = selectedList[0]
         copy.primary = true;
         localStorage.setObj(selectedList[0].id, { ...copy })
