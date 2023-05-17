@@ -31,7 +31,7 @@ app.post('/api/chat', async (req, res) => {
     try {
         const completion = await openai.createChatCompletion({
             model: 'gpt-3.5-turbo',
-            messages: [{ role: 'user', content: `${data}`}]
+            messages: [{ role: 'user', content: `listed items, maximum of five, request: ${data}`}]
         })
         console.log('completion.data.choices[0].message: ', completion.data.choices[0].message.content);
         
@@ -70,7 +70,7 @@ app.post('/api/chat', async (req, res) => {
     // }
 })
 
-const PORT = process.env.PORT || 3333;
+const PORT = process.env.PORT || 4444;
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}...`)
