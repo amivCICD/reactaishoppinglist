@@ -76,40 +76,26 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, handle
     }, [aiReply, filteredAi, temporaryArr, currentObj])
 
     const handleClick = (e) => {
-
-        
-        
         let id = e.target.id;
-        // console.log('what does suggestions think is the current obj', currentObj);
-        // console.log(id);
         let individualItem = filteredAi.filter(i => i.id === id);
         let copy = { ...currentObj };
         let filt = currentObj.groceryList.filter(i => i.grocery !== 'Please add a grocery item to proceed...'); // filter out
         copy.groceryList = [...filt, ...individualItem]; // join arrays with new individual item
-        // console.log('updated copy', copy);
         localStorage.setObj(copy.id, copy);
         setCurrentObj(copy); // re-render with current list
-        
-
-        console.log('individualItem', individualItem);
         let remainderItems = filteredAi.filter(i => i.id !== id);
-        // setRemainderItems(filteredAi?.filter(i => i.id !== id));
-        console.log('remainderItems ', remainderItems);
-        // if (remainderItems.length === 0) {
-        //     remainderItems = null;
-        // } 
         setFilteredAi(remainderItems);
-        console.log('filteredai should be null here', filteredAi);
-        console.log('null remainder items ', remainderItems);
-        // console.log('filtAi length ', filteredAi.length, filteredAi);
-        
-        // setStateChanged(prev => !prev)
-        // handleStateChange(stateChanged)
-
     }
 
-    const handleAddToList = () => {
-
+    const handleAddToList = (e) => {
+        let id = e.target.id;
+        let copy = { ...currentObj };
+        let filt = currentObj.groceryList.filter(i => i.grocery !== 'Please add a grocery item to proceed...');
+        copy.groceryList = [...filt, ...filteredAi];
+        localStorage.setObj(copy.id, copy);
+        setCurrentObj(copy); // re-render with current list
+        let remainderItems = [];
+        setFilteredAi(remainderItems);
     }
 
     return (
