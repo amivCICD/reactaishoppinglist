@@ -19,7 +19,7 @@ module.exports = {
   },
   content: [
     "./src/**/*.{html,js,jsx}",
-    "./reactShopCart/src/**/*.{html,js,jsx}"
+    "./reactShopCart/**/*.{html,js,jsx}"
   ],
   theme: {
     extend: {
