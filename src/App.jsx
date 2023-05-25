@@ -5,7 +5,7 @@ import GPTInput from "./gpt_input/GPTInput"
 import { useEffect, useState } from "react"
 
 function App() {
-  // npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
+  // npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch  // production
  
 
   return (

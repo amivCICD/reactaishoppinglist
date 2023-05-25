@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Suggestions from "./returned_list/Suggestions";
+import { gsap } from "gsap";
+
 
 
 
@@ -10,7 +12,7 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
     const [loading, setLoading] = useState(false);
     const [temporaryArr, setTemporaryArr] = useState(null);
     const [newQuery, setNewQuery] = useState(false);
-    
+    const boxRef = useRef(null);
 
     useEffect(() => {
         // console.log('use effect aiReply', aiReply);
@@ -45,13 +47,20 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
         setVal(e.target.value)
         // console.log(val);
     }
+    // const scrollToElement = () => {
+    //     boxRef.current.scrollIntoView({
+    //         behavior: 'smooth',
+    //         block: 'center'
+    //     })
+    //     console.log('k its there');
+    // }
 
     const handleClick = (e) => {
         if (val === '') return
         // put a toast here
         // e.preventDefault();
         // console.log(val)
-        sendPost(val);
+        // sendPost(val);
         setInitialQuery(val);
         setVal("");
         setLoading(true);
@@ -66,17 +75,18 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
         //     { grocery: "5. French toast", id: "2899951377158482", acquired: false }
         // ]
         // delay(1000).then(() => setTemporaryArr(a))
-            
-
+        // scrollToElement()
         
         
     }
+
+    
 
 
 
     return (
         <>
-            <div className="bg-neutral rounded-md w-fit h-fit flex flex-col items-center justify-center mx-auto my-[5%]">
+            <div ref={boxRef} className="bg-neutral rounded-md w-fit h-fit flex flex-col items-center justify-center mx-auto my-[5%]">
                 <label className="p-2 font-bold mx-2 my-2">Ask ChatGPT 3.5 Turbo for suggestions...</label>
                 <input className='input p-2 bg-transparent border border-error text-white placeholder:text-white placeholder:text-opacity-30' 
                     placeholder="e.g. protein diet"
@@ -102,6 +112,7 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
                     currentObj={currentObj}
                     setCurrentObj={setCurrentObj}
                     newQuery={newQuery}
+                    
                 />
                 
             </div>

@@ -11,7 +11,7 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
             
             <div className="w-5/6 sm:w-3/4 bg-neutral flex flex-col items-start mx-auto p-5 h-fit rounded-md">
                 {/* <ListItem itemsArr={itemsArr?.length !== 0 ? itemsArr : arr} onStateChange={onStateChange} /> */}
-                <ListItem 
+                <ListItem
                     itemsArr={itemsArr} 
                     currentObj={currentObj}
                     setCurrentObj={setCurrentObj} 

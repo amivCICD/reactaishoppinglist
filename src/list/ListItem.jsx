@@ -1,17 +1,19 @@
-import { useEffect, useState, useReducer } from "react";
+import { useEffect, useState, useReducer, useRef, useLayoutEffect } from "react";
 import { INITIAL_STATE, postReducer } from "../postReducer/postReducer"
 import { ACTION_TYPES } from "../postReducer/actiontypes"
+import { gsap } from "gsap";
 
 
-export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
+export default ({ itemsArr, currentObj, setCurrentObj }) => {
     
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
-    const [checked, setChecked] = useState(false)
+    const [initialLoad, setInitialLoad] = useState(true)
+    
+
     let randomId = Math.random().toString().slice(2)
 
     const handleRemove = (e) => {
         let id = e.target.parentElement.parentElement.id
-        console.log(id);
         let index = id
         let groceryItemIndex = itemsArr[index]
 
@@ -47,7 +49,7 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
             setCurrentObj(updated);
 
             dispatch({ type: ACTION_TYPES.STATE_UPDATED, payload: { ...currentObj } })
-            // onStateChange(checkedVal)
+            
             
         } else if (!checkedVal) {
             
@@ -66,13 +68,60 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
 
     useEffect(() => {
         
+        setTimeout(() => {
+            setInitialLoad(false)
+        }, 1000)
  
     }, [state.STATE_UPDATED])
+
+    
+    let app = useRef();
+    useLayoutEffect(() => {
+        let x = Math.random().toString().slice(2, 4)
+
+        if (initialLoad) {
+            let ctx = gsap.context(() => {
+                gsap.fromTo('.itemDiv', 
+                    {
+                        opacity: 0,
+                        x: x,
+                    }, 
+                    {
+                        x: 0,
+                        opacity: 1,
+                        duration: 1,
+                        stagger: .05,
+                        ease: 'elastic'
+                    })   
+            }, app)
+            return () => ctx.revert();
+        }
+        
+
+        // your ref only covers one dom node, this can work if you use the multiple selector
+        
+    }, [itemsArr])
+    useLayoutEffect(() => {
+        const arrayOfItems = Array.from(document.querySelectorAll('.itemDiv'))
+       
+        if (!initialLoad) {
+            
+                const ctx = gsap.context(() => {
+                    gsap.fromTo(arrayOfItems[0], { opacity: 0, duration: 2,  x: -25  }, { opacity: 1, x: 0, ease: 'elastic', duration: 1, })
+                }, app)
+                ctx.add(() => {
+                    gsap.fromTo(arrayOfItems[0], { opacity: 0  }, { opacity: 1, duration: .5 })
+                }, app)
+                return () => ctx.revert()
+        }
+        
+
+    }, [itemsArr])
     
 
     return (
         
-        <div className="h-full w-full mx-auto gap-5">
+        <div ref={app} className="h-full w-full mx-auto gap-5">
             
             {
                 // itemsArr?.length !== 0

@@ -1,8 +1,8 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 
-export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, handleStateChange, currentObj, setCurrentObj }) => {
+export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, currentObj, setCurrentObj }) => {
     // console.log(aiReply?.content)
     // let shoppingList = aiReply?.split('\n')
     const [aiObj, setAiObj] = useState([]);
@@ -40,7 +40,11 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, handle
     // console.log(makeNewObj(aiReplyList));
 
     useEffect(() => {
-        console.log(filteredAi);
+        // console.log(filteredAi);
+        if (loading) {
+            document.querySelector('#test')
+                .scrollIntoView({ block: 'center', behavior: 'smooth'})
+        }
         
         
 
@@ -73,7 +77,7 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, handle
         //     console.log(itemized);
         // }
         
-    }, [aiReply, filteredAi, temporaryArr, currentObj])
+    }, [aiReply, filteredAi, temporaryArr, currentObj, loading])
 
     const handleClick = (e) => {
         let id = e.target.id;
@@ -101,7 +105,7 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, handle
     return (
         <>
         {loading && 
-            <div className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md">
+            <div id="test" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md">
                 <h3 className="text-center text-xl p-4 pt-2">Your query: "{initialQuery}"</h3>
                 <span className="text-2xl text-warning bg-transparent mr-auto animate-reverse-spin">&#10042;</span>
                 <div className="animate-spin text-8xl text-warning bg-transparent">&#10042;</div>

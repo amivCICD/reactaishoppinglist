@@ -10,7 +10,7 @@ export const useLocalStorage = (key, initialValue) => {
     let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
     // pak.length > 1 ? pak = pak.slice(1) : pak
     // console.log('pak ', pak, pak.length);
-    console.log('key ', key);
+    // console.log('key ', key);
     let primaryArrKey = key[0]?.id
     // this thing should fetch the key you need, not have it implemented?
     
@@ -20,7 +20,7 @@ export const useLocalStorage = (key, initialValue) => {
         try {
             const item = window.localStorage.getObj(primaryArrKey)
 
-            console.log('item fired', item);
+            // console.log('item fired', item);
            
             return item ? item : initialValue
             // return primaryArrKey?.length > 0 ? item : initialValue
@@ -32,7 +32,7 @@ export const useLocalStorage = (key, initialValue) => {
     })
     useEffect(() => {
         const item = window.localStorage.getObj(primaryArrKey)
-        console.log(item);
+        // console.log(item);
         try {
             if(item) {
                 window.localStorage.setObj(primaryArrKey, storedValue)
