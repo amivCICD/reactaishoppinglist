@@ -35,14 +35,12 @@ export default ({ appState }) => {
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
     const [parentState, setParentState] = useState(false);
     const [itemsArr, setItemsArr] = useState(['Please add an item to begin...']);
-    let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
-
-    const [initialKey, setInitialKey] = useRetrieveKeys(pak)
-    const [currentObj, setCurrentObj] = useLocalStorage(pak, INITIAL_STATE)
     const [listNames, setListNames] = useState([])
+    let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
+    const [currentObj, setCurrentObj] = useLocalStorage(pak, INITIAL_STATE)
     
     
-    // I believe you need to change your initial_state to be your starting object
+    
     
 
     const handleStateChange = (newState) => {
@@ -54,6 +52,7 @@ export default ({ appState }) => {
 
     
     useEffect(() => {
+        console.log(' add items re rendered');
        
         setListNames(objNamesList(getObjCount()));
         setItemsArr(currentObj?.groceryList);
@@ -150,7 +149,7 @@ export default ({ appState }) => {
         <List itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} onStateChange={handleStateChange}  />
         <div className="flex items-center justify-center my-5">
             <SaveList itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} />
-            <ViewLists currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} />
+            <ViewLists currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} handleStateChange={handleStateChange} />
             <NewList currentObj={currentObj} setCurrentObj={setCurrentObj} handleStateChange={handleStateChange} />
         </div>
         <div className="h-52">

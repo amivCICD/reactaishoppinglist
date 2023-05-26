@@ -1,7 +1,7 @@
 
 import ViewDialog from "./viewDialog/ViewDialog";
 
-export default ({ currentObj, listNames, itemsArr, setCurrentObj }) => {
+export default ({ currentObj, listNames, itemsArr, setCurrentObj, handleStateChange }) => {
 
 
     return (

@@ -9,9 +9,9 @@ import { updateObjectPrimary } from "../../functions/objectNamesList";
 export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
-    const [lists, setLists] = useState([]);
-    const [render, setRender] = useState(false)
-    // const [listNames, setListNames] = useRetrieveKeys();
+    
+    
+    
     
 
     
@@ -19,9 +19,9 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
         const keys = retrieveKeys();
         const allLists = retrieveLists(keys)
         // console.log('keys from ViewLists', keys);
-        // console.log('retrieved lists', allLists);
+        console.log('retrieved lists', allLists);
+        console.log(listNames); // same as above
         // setLists(allLists)
-        // console.log(listNames);
         // console.log('listNames in ViewDialog', listNames);
         // setListNames(allLists)
 
@@ -30,9 +30,20 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
         
 
     }, [state.STATE_UPDATED])
+    console.log(listNames);
 
     const openDialog = () => {
         document.querySelector('#listsDialog').showModal();
+        let li = Array.from(document.querySelectorAll('li'))
+        console.log(li[0].id);
+        li.forEach(line => {
+            if (line.id === currentObj.id) {
+                line.classList.add('border-4')
+                line.classList.add('border-warning')
+                line.classList.add('border-dashed')
+            }
+        })
+
     }
     const handleLoadLists = (e) => {
         // console.log(e.target.id);
@@ -50,20 +61,33 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
         localStorage.setObj(selectedList[0].id, { ...copy })
         setCurrentObj(copy)
 
-        
+        let li = Array.from(document.querySelectorAll('li'))
+        console.log(li[0].id);
+        li.forEach(line => {
+            if (line.id === currentObj.id) {
+                line.classList.remove('border-4')
+                line.classList.remove('border-red-500')
+                line.classList.remove('border-dashed')
+            }
+        })
+
         document.querySelector('#listsDialog').close();
        
     //    updateObjectPrimary(currentObj, true) 
     }
-    // function updateObjectPrimary(selectedObj, Boolean) {
-    //     let objCopy = { ...selectedObj }
-    //     objCopy.primary = Boolean;
-    //     let item = localStorage.setObj(objCopy.id, objCopy);
-    //     return item;
-    // }
-   
+    const handleDeleteList = e => {
+    
+        if (e.target.id === currentObj.id) {
+            console.log('same');
 
-
+        } else {
+            console.log('not the one!');
+            
+            
+        }
+        
+    }
+    
     return (
         <>
         <a className="
@@ -78,13 +102,19 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
                     onClick={() => document.querySelector('#listsDialog').close()}
                     >X
                 </div>
+                <div className="border-dashed border-warning border-4 text-white w-fit p-2 italic font-extralight">current list</div>
                 <div className="flex flex-col items-center justify-center my-auto h-full">
                 <h1 className="text-4xl text-white font-black">Saved Lists:</h1>
                     <ul className="text-white inline-block p-4">
                         {listNames?.length > 0 && listNames?.map((list, i) => {
                             // <li className="text-white z-50" key={list?.id ? list.id : list.name}>{list?.name}</li>
-                            return <li key={list?.id ? list?.id : i} className="text-secondary p-2 font-bold flex items-center justify-center">
-                                        <button className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2 mr-4">&#9850;</button>
+                            return <li key={list?.id ? list?.id : i} id={list.id} className="text-secondary p-2 font-bold flex items-center justify-center">
+                                        <button 
+                                            className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2 mr-4"
+                                            onClick={handleDeleteList}
+                                            id={list.id}
+                                        >&#9850;
+                                        </button>
                                         <p className="mr-4">{list?.name ? list?.name : list?.id}</p>
                                         <a 
                                             className="btn btn-circle btn-outline ml-auto text-accent hover:bg-transparent hover:text-success-content"
