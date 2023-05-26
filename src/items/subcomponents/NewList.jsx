@@ -31,11 +31,23 @@ export default ({ currentObj, setCurrentObj, handleStateChange }) => {
         const n = new makeNewObj()
         console.log('constructor function', n);
 
-
         localStorage.setObj(n.id, n)
         let item = localStorage.getObj(n.id)
         console.log('item``` ', item);
-        setCurrentObj(item)
+        setCurrentObj(item);
+
+        let li = Array.from(document.querySelectorAll('li'))
+        li.forEach(line => {
+          
+            if (line.id === currentObj.id) {
+                line.classList.remove('border-4')
+                line.classList.remove('border-warning')
+                line.classList.remove('border-dashed')
+            }
+        })
+
+
+
 
         dispatch({ type: ACTION_TYPES.NEW_STATE })
     }

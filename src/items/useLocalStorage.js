@@ -7,7 +7,7 @@ import { retrieveKeys, retrieveLists, retrievePrimaryArrayKey } from "./saveRetr
 export const useLocalStorage = (key, initialValue) => {
     // const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
     // console.log(key);
-    let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
+    // let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
     // pak.length > 1 ? pak = pak.slice(1) : pak
     // console.log('pak ', pak, pak.length);
     // console.log('key ', key);

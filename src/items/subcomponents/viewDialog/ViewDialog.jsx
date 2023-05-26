@@ -1,41 +1,28 @@
 import { useEffect, useReducer, useState } from "react";
 import { INITIAL_STATE, postReducer } from "../../../postReducer/postReducer";
-import { ACTION_TYPES } from "../../../postReducer/actiontypes";
 import { retrieveKeys, retrieveLists } from "../../saveRetrieve"
-import { useRetrieveKeys } from "../../useRetrieveKeys";
-import { updateObjectPrimary } from "../../functions/objectNamesList";
 
 
-export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
+
+export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteList }) => {
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
     
-    
-    
-    
 
-    
     useEffect(() => {
-        const keys = retrieveKeys();
-        const allLists = retrieveLists(keys)
-        // console.log('keys from ViewLists', keys);
-        console.log('retrieved lists', allLists);
+        // const keys = retrieveKeys();
+        // const allLists = retrieveLists(keys)
+        // console.log('all lists', allLists);
         console.log(listNames); // same as above
-        // setLists(allLists)
-        // console.log('listNames in ViewDialog', listNames);
-        // setListNames(allLists)
-
-        // console.log('IS THIS RE RENDERING ON OPEN DIALOG CLICK');
-
         
 
     }, [state.STATE_UPDATED])
-    console.log(listNames);
 
+    console.log(listNames);
     const openDialog = () => {
         document.querySelector('#listsDialog').showModal();
         let li = Array.from(document.querySelectorAll('li'))
-        console.log(li[0].id);
+        // console.log(li[0].id);
         li.forEach(line => {
             if (line.id === currentObj.id) {
                 line.classList.add('border-4')
@@ -43,19 +30,12 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
                 line.classList.add('border-dashed')
             }
         })
-
     }
     const handleLoadLists = (e) => {
-        // console.log(e.target.id);
-        // console.log('list namesssssss ', listNames);
         let copyOfCurrentObj = { ...currentObj }
         copyOfCurrentObj.primary = false;
         localStorage.setObj(copyOfCurrentObj.id, copyOfCurrentObj);
-
-
-        // loading symbol in here somewhere
         let selectedList = listNames.filter(i => i.id === e.target.id);
-        // console.log(selectedList);
         let copy = selectedList[0]
         copy.primary = true;
         localStorage.setObj(selectedList[0].id, { ...copy })
@@ -75,18 +55,7 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
        
     //    updateObjectPrimary(currentObj, true) 
     }
-    const handleDeleteList = e => {
     
-        if (e.target.id === currentObj.id) {
-            console.log('same');
-
-        } else {
-            console.log('not the one!');
-            
-            
-        }
-        
-    }
     
     return (
         <>
@@ -109,27 +78,36 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames }) => {
                         {listNames?.length > 0 && listNames?.map((list, i) => {
                             // <li className="text-white z-50" key={list?.id ? list.id : list.name}>{list?.name}</li>
                             return <li key={list?.id ? list?.id : i} id={list.id} className="text-secondary p-2 font-bold flex items-center justify-center">
-                                        <button 
-                                            className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2 mr-4"
+                                        {list.id === currentObj.id ? 
+                                            <button 
+                                                className="
+                                                    btn btn-accent btn-xs sm:btn-xl btn-outline 
+                                                    border-2 text-4xl h-12 pb-2 mr-auto
+                                                    tooltip"
+                                                id={list.id}
+                                                data-tip="This is your current list"
+                                            >&#9733;
+                                            </button>
+                                         : <button 
+                                            className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2 mr-auto"
                                             onClick={handleDeleteList}
                                             id={list.id}
-                                        >&#9850;
-                                        </button>
-                                        <p className="mr-4">{list?.name ? list?.name : list?.id}</p>
-                                        <a 
+                                            >&#9850;
+                                            </button>
+                                        }
+                                        <p className="flex items-center justify-center p-2">{list?.name ? list?.name : list?.id}</p>
+                                        {list.id !== currentObj.id ? <a 
                                             className="btn btn-circle btn-outline ml-auto text-accent hover:bg-transparent hover:text-success-content"
                                             onClick={handleLoadLists}
                                             id={list.id}
                                         >
-                                            Load
+                                        Load
                                         </a>
+                                        : ''}
                                     </li>
                         })}
-                        
                     </ul>
-                    
                 </div>
-                
             </dialog>
         </>
     )

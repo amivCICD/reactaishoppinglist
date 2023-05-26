@@ -3,26 +3,16 @@ import { postReducer, INITIAL_STATE } from "../postReducer/postReducer";
 import { ACTION_TYPES } from "../postReducer/actiontypes";
 import List from "../list/List";
 import SaveList from "./subcomponents/SaveList";
-import ViewLists from "./subcomponents/ViewLists";
-import { deleteList, retrieveKeys, retrieveLists, retrievePrimaryArr, saveList, retrievePrimaryArrayKey } from "./saveRetrieve";
+import { retrieveKeys, retrieveLists, retrievePrimaryArrayKey } from "./saveRetrieve";
 import { useLocalStorage } from "./useLocalStorage";
-import { useRetrieveKeys } from "./useRetrieveKeys";
 import { getObjCount, objNamesList } from "./functions/objectNamesList";
 import NewList from "./subcomponents/NewList";
 import GPTInput from "../gpt_input/GPTInput";
 import { gsap } from "gsap";
+import ViewDialog from "./subcomponents/viewDialog/ViewDialog";
 
 
-
-// notes 6:57 P.M. - you are leaving off where we are setting local storage items, now we just need to fetch them,
-// but we also need to look for changes to localStorage, or else the DOM will not update
-// useEffect should be called, and we can consider using useReducer hook for our state as well as local storage state changes
-// this is the AddItems component, should we separate the logic of appending from this?
-
-// update: 8:10 am 03 17 2023 - just dispatch a re-render to the list component, see what happens
-
-
-export default ({ appState }) => {
+export default () => {
     Storage.prototype.setObj = function(key, obj) {
         return this.setItem(key, JSON.stringify(obj));
     }
@@ -30,17 +20,13 @@ export default ({ appState }) => {
         return JSON.parse(this.getItem(key))
     }
 
-    
-
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
     const [parentState, setParentState] = useState(false);
     const [itemsArr, setItemsArr] = useState(['Please add an item to begin...']);
     const [listNames, setListNames] = useState([])
+    const [listNames2, setListNames2] = useState([])
     let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
     const [currentObj, setCurrentObj] = useLocalStorage(pak, INITIAL_STATE)
-    
-    
-    
     
 
     const handleStateChange = (newState) => {
@@ -49,15 +35,14 @@ export default ({ appState }) => {
         dispatch({ type: ACTION_TYPES.STATE_UPDATED })
     }
     
-
-    
     useEffect(() => {
         console.log(' add items re rendered');
-       
         setListNames(objNamesList(getObjCount()));
+        console.log('list names in use effect', listNames);
         setItemsArr(currentObj?.groceryList);
-        
-    }, [currentObj, parentState, appState])
+    }, [currentObj, parentState, listNames2])
+
+    
     
     
     
@@ -105,10 +90,45 @@ export default ({ appState }) => {
         }
     }
     const clearList = () => {
-        
-        console.log(currentObj);
-        dispatch({ type: ACTION_TYPES.FETCH_REMOVE })
-        
+        let randomId = Math.random().toString().slice(2)
+        let copy = { ...currentObj }
+        copy.groceryList = [{ grocery: 'Please add a grocery item to proceed...', id: randomId, acquired: false }];
+        localStorage.setObj(copy.id, copy)
+        setCurrentObj(copy) 
+    }
+    const handleDeleteList = e => {
+        if (e.target.id === currentObj.id) {
+            return;
+            // let filtArr = listNames.filter(i => i.id !== e.target.id)
+            // console.log('same');
+            // console.log('filt array in 1st section ', filtArr); // its correct
+            // if (filtArr.length === 1) {
+            //     console.log('hitting?');
+            
+            // }
+            // if (listNames.length === 1) {
+                //     filtArr[0] = { groceryList: [{ grocery: 'Please add a grocery item to proceed...', acquired: false }] , id: randomId, primary: true }
+                //     setCurrentObj(filtArr[0]);
+                //     return
+                // }
+                
+                
+                
+            // let randomId = Math.random().toString().slice(2)
+            // localStorage.removeItem(e.target.id)
+            // console.log('listNames BEFORE first if ', listNames);
+            // setListNames(filtArr)
+            // console.log('listNames AFTER first if ', listNames);
+            // // setListNames2(filtArr)
+            // console.log('top section current obj', currentObj);
+            // setCurrentObj({ groceryList: [{ grocery: 'Please add a grocery item to proceed...', acquired: false }] , id: randomId, primary: true })
+            // setParentState(prev => !prev)
+            
+        } else {
+            let filtArr = listNames.filter(i => i.id !== e.target.id)
+            localStorage.removeItem(e.target.id)
+            setListNames(filtArr)
+        }
     }
     
     let component = useRef();
@@ -126,7 +146,7 @@ export default ({ appState }) => {
     return (
         <>
         <div className="flex items-center justify-center pt-2 pb-6">
-            <div className="relative">
+            <div className="relative" ref={component}>
                 <input className="groceryInput input input-bordered input-success w-72 max-w-md" 
                        type="text" 
                        placeholder="Grocery..."
@@ -134,22 +154,24 @@ export default ({ appState }) => {
                        name="grocery"
                        onKeyUp={handleEnterKeyDown}
                 />
-                <div className="absolute top-0 left-[178px]" ref={component}>
-                    <button id="plus" className="btn btn-accent btn-outline border-2 text-4xl pb-2"
+                <div className="absolute top-0 left-[178px] tooltip" data-tip="Add item"  >
+                    <button id="plus" className="btn btn-accent btn-outline border-2 text-4xl pb-2 z-40" 
                             onClick={handleClick}
+                            
                     >+</button>
-                    <div className="absolute top-0 left-[60px] sm:left-[60px]">
+                </div>
+                    <div className="absolute top-0 left-[235px] tooltip" data-tip="Clear entire list">
                     <button id="minus" className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2"
                             onClick={clearList}
                     >&#9850;</button>
                     </div>
-                </div>
             </div>
         </div>
         <List itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} onStateChange={handleStateChange}  />
         <div className="flex items-center justify-center my-5">
             <SaveList itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} />
-            <ViewLists currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} handleStateChange={handleStateChange} />
+            {/* <ViewLists currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} /> */}
+            <ViewDialog currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} handleDeleteList={handleDeleteList} />
             <NewList currentObj={currentObj} setCurrentObj={setCurrentObj} handleStateChange={handleStateChange} />
         </div>
         <div className="h-52">

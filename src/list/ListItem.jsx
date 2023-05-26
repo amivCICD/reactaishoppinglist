@@ -132,18 +132,20 @@ export default ({ itemsArr, currentObj, setCurrentObj }) => {
                                     >{i.grocery}
                                     <div className="flex justify-end ml-auto items-center">
                                         <button 
-                                            onClick={handleRemove} 
+                                            onClick={handleRemove}
+                                            data-tip="Remove this item"
                                             className=
-                                                {`btn btn-accent btn-sm rounded-1/2 mr-2 font-bold text-xl items-center ${itemsArr[0]?.grocery === 'Please add a grocery item to proceed...' && 'hidden'}`}
+                                                {`btn btn-accent tooltip btn-sm rounded-1/2 mr-2 font-bold text-xl items-center ${itemsArr[0]?.grocery === 'Please add a grocery item to proceed...' && 'hidden'}`}
                                         >
                                         -</button>
                                         
                                         <input className=
-                                            {`checkbox checkbox-primary ml-1 ${itemsArr[0]?.grocery === 'Please add a grocery item to proceed...' && 'hidden'}`} 
+                                            {`checkbox checkbox-primary tooltip-primary tooltip ml-1 ${itemsArr[0]?.grocery === 'Please add a grocery item to proceed...' && 'hidden'}`} 
                                             type="checkbox"
                                             onChange={handleChange}
                                             value={i.acquired}
                                             checked={i.acquired}
+                                            data-tip="Check this off your list"
                                         />
                                     </div>
                             </div>
