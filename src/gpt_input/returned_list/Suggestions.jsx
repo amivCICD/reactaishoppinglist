@@ -44,7 +44,7 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
         if (loading) {
             document.querySelector('#loading')
                 ?.scrollIntoView({ block: 'center', behavior: 'smooth'})
-        } else if (!loading) {
+        } else if (!loading && newQuery) {
             document.querySelector('#results')
                 ?.scrollIntoView({ block: 'center', behavior: 'smooth'})
         }
