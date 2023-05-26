@@ -66,6 +66,12 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
         setLoading(true);
         setNewQuery(true)
 
+        try {
+            sendPost(val)
+        } catch(err) {
+            console.log(err)
+        }
+
         // const delay = t => new Promise(res => setTimeout(res, t))
         // let a = [
         //     { grocery: "1. Pancakes", id: "21763197644368582", acquired: false },

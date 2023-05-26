@@ -42,8 +42,11 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
     useEffect(() => {
         // console.log(filteredAi);
         if (loading) {
-            document.querySelector('#test')
-                .scrollIntoView({ block: 'center', behavior: 'smooth'})
+            document.querySelector('#loading')
+                ?.scrollIntoView({ block: 'center', behavior: 'smooth'})
+        } else if (!loading) {
+            document.querySelector('#results')
+                ?.scrollIntoView({ block: 'center', behavior: 'smooth'})
         }
         
         
@@ -105,14 +108,14 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
     return (
         <>
         {loading && 
-            <div id="test" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md">
+            <div id="loading" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md">
                 <h3 className="text-center text-xl p-4 pt-2">Your query: "{initialQuery}"</h3>
                 <span className="text-2xl text-warning bg-transparent mr-auto animate-reverse-spin">&#10042;</span>
                 <div className="animate-spin text-8xl text-warning bg-transparent">&#10042;</div>
                 <span className="text-4xl text-warning bg-transparent ml-auto animate-reverse-spin">&#10042;</span>
             </div>
         }
-        {!loading && !!filteredAi?.length && <div className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md">
+        {!loading && !!filteredAi?.length && <div id="results" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md">
             <h3 className="text-center text-xl p-4 pt-2">Your query: "{initialQuery}"</h3>
             <h1 className="text-left text-4xl p-4 pt-2">ChatGPT suggested items:</h1>
                 <ul className="m-2">
