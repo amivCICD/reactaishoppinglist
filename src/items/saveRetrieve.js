@@ -14,8 +14,13 @@ function saveList(listName, itemsArr) {
 function retrieveKeys() {
     let localStorageLength = localStorage.length;
     let keys = [];
+    // for (let i=0; i < localStorageLength; i+=1) {
+    //     if (localStorage.key(i) !== 'replaced_stats' && localStorage.key(i) !== 'clerk-db-jwt') {
+    //         keys.push(localStorage.key(i))
+    //     }
+    // }
     for (let i=0; i < localStorageLength; i+=1) {
-        if (localStorage.key(i) !== 'replaced_stats') {
+        if (typeof localStorage.key(i) === "object") {
             keys.push(localStorage.key(i))
         }
     }

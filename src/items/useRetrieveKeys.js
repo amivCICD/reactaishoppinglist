@@ -6,8 +6,13 @@ export const useRetrieveKeys = () => {
             let arr = [];
             let len = localStorage.length
 
+            // for (let i=0; i<len; i+=1) {
+            //     if (localStorage.key(i) !== 'replaced_stats' && localStorage.key(i) !== 'clerk-db-jwt') {
+            //         arr.push(localStorage.key(i))
+            //     }
+            // }
             for (let i=0; i<len; i+=1) {
-                if (localStorage.key(i) !== 'replaced_stats') {
+                if (typeof localStorage.key(i) === "object") {
                     arr.push(localStorage.key(i))
                 }
             }

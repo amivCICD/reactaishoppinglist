@@ -64,7 +64,9 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
         setInitialQuery(val);
         setVal("");
         setLoading(true);
-        setNewQuery(true)
+        document.querySelector('#loading')
+                ?.scrollIntoView({ block: 'center', behavior: 'smooth'})
+        setNewQuery(true);
 
         try {
             sendPost(val)

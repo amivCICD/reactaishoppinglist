@@ -2,8 +2,14 @@ function getObjCount() {
     let arr = [];
     let len = localStorage.length
 
+    // for (let i=0; i<len; i+=1) {
+    //     if (localStorage.key(i) !== 'replaced_stats') {
+    //         arr.push(localStorage.key(i))
+    //     }
+    // } // if there is something else in local storage, e.g. 'clerk-db-jwt' was in there randomly, so if a user has other local storage stuff
+    // the error handling is done better here 
     for (let i=0; i<len; i+=1) {
-        if (localStorage.key(i) !== 'replaced_stats') {
+        if (typeof localStorage.key(i) === 'object') {
             arr.push(localStorage.key(i))
         }
     }
