@@ -4,7 +4,7 @@ export const useRetrieveKeys = () => {
     const [listNames, setListNames] = useState(() => {
         function getObjCount() {
             let arr = [];
-            let len = localStorage.length
+            let len = localStorage.length;
 
             // for (let i=0; i<len; i+=1) {
             //     if (localStorage.key(i) !== 'replaced_stats' && localStorage.key(i) !== 'clerk-db-jwt') {

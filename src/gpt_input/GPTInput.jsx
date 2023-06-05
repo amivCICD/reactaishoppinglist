@@ -13,12 +13,24 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
     const [temporaryArr, setTemporaryArr] = useState(null);
     const [newQuery, setNewQuery] = useState(false);
     const boxRef = useRef(null);
+    const [initialInnerHeight, setInitialInnerHeight] = useState(window.innerHeight)
 
     useEffect(() => {
         // console.log('use effect aiReply', aiReply);
         // if (temporaryArr) {
         //     setLoading(false)
         // }
+        
+        console.log('initialinner ', initialInnerHeight)
+        // console.log('adjustableinner  ', innerHeight)
+        // window.onresize = e => console.log(e.target.innerHeight)
+        window.onresize = e => {
+            if(e.target.innerHeight === initialInnerHeight) {
+                console.log(true);
+                document.querySelector('#loading')
+                ?.scrollIntoView({ block: 'center', behavior: 'smooth'})
+            }
+        }
         if (aiReply) {
             setLoading(false)
             setNewQuery(false)
@@ -28,7 +40,7 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
             setAiReply(null)
         }
         
-    }, [aiReply, temporaryArr])
+    }, [aiReply, temporaryArr, innerHeight])
 
     const sendPost = (data) => {
         fetch('/api/chat', {
@@ -64,8 +76,6 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
         setInitialQuery(val);
         setVal("");
         setLoading(true);
-        document.querySelector('#loading')
-                ?.scrollIntoView({ block: 'center', behavior: 'smooth'})
         setNewQuery(true);
 
         try {
