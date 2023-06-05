@@ -8,12 +8,17 @@ function getObjCount() {
     //     }
     // } // if there is something else in local storage, e.g. 'clerk-db-jwt' was in there randomly, so if a user has other local storage stuff
     // the error handling is done better here 
+    // for (let i=0; i<len; i+=1) {
+    //     if (typeof localStorage.key(i) === 'object') {
+    //         arr.push(localStorage.key(i))
+    //     }
+    // } // this doesnt work
     for (let i=0; i<len; i+=1) {
-        if (typeof localStorage.key(i) === 'object') {
+        if (typeof JSON.parse(localStorage.key(i)) === 'object') {
             arr.push(localStorage.key(i))
         }
     }
-    
+
     return arr;
 }
 function objNamesList(arrayOfKeys) {

@@ -12,7 +12,7 @@ export const useRetrieveKeys = () => {
             //     }
             // }
             for (let i=0; i<len; i+=1) {
-                if (typeof localStorage.key(i) === "object") {
+                if (typeof JSON.parse(localStorage.key(i)) === "object") {
                     arr.push(localStorage.key(i))
                 }
             }

@@ -20,7 +20,7 @@ function retrieveKeys() {
     //     }
     // }
     for (let i=0; i < localStorageLength; i+=1) {
-        if (typeof localStorage.key(i) === "object") {
+        if (typeof JSON.parse(localStorage.key(i)) === "object") {
             keys.push(localStorage.key(i))
         }
     }
