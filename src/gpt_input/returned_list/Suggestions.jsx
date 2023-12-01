@@ -115,7 +115,7 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
                 <span className="text-4xl text-warning bg-transparent ml-auto animate-reverse-spin">&#10042;</span>
             </div>
         }
-        {!loading && !!filteredAi?.length && <div id="results" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md mb-48">
+        {!loading && !!filteredAi?.length && <div id="results" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md mb-48 mt-6">
             <h3 className="text-center text-xl p-4 pt-2">Your query: "{initialQuery}"</h3>
             <h1 className="text-left text-4xl p-4 pt-2">ChatGPT suggested items:</h1>
                 <ul className="m-2">
