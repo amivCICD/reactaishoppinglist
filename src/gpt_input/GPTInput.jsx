@@ -105,8 +105,8 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
     return (
         <>
             <div ref={boxRef} className="bg-neutral rounded-md w-fit h-fit flex flex-col items-center justify-center mx-auto my-[5%]">
-                <label className="p-2 font-bold mx-2 my-2">Ask ChatGPT 3.5 Turbo for suggestions...</label>
-                <input className='input p-2 bg-transparent border border-error text-white placeholder:text-white placeholder:text-opacity-30'
+                <label className="p-2 font-bold mx-2 my-2">Get <span className="italic">ChatGPT 3.5 Turbo</span> suggestions...</label>
+                <input className='input p-2 bg-transparent border border-error text-white placeholder:text-white placeholder:text-opacity-30 animate-pulse'
                     placeholder="e.g. protein diet"
                     onChange={handleChange}
                     value={val}
