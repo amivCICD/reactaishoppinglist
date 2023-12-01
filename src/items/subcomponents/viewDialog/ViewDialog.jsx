@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useState } from "react";
 import { INITIAL_STATE, postReducer } from "../../../postReducer/postReducer";
 import { retrieveKeys, retrieveLists } from "../../saveRetrieve"
+import { gsap } from "gsap";
 
 
 
@@ -16,12 +17,32 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteLi
         //console.log(listNames); // same as above
 
 
+
+
+
+
+
     }, [state.STATE_UPDATED])
 
     //console.log(listNames);
     const openDialog = () => {
         document.querySelector('#listsDialog').showModal();
         let li = Array.from(document.querySelectorAll('li'))
+        let ctx = gsap.context(() => {
+            gsap.fromTo('#listsDialog',
+                {
+                    opacity: 0,
+                    x: 1000,
+                },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                    stagger: .05,
+                    ease: 'elastic'
+                })
+        })
+
         // console.log(li[0].id);
         li.forEach(line => {
             if (line.id === currentObj.id) {
@@ -65,7 +86,7 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteLi
             onClick={openDialog}
             >Lists
         </a>
-            <dialog id="listsDialog" className="w-3/4 h-3/4 bg-neutral outline-double outline-warning outline-[24px] rounded-md">
+            <dialog id="listsDialog" className="w-3/4 h-3/4 bg-neutral outline-double outline-warning outline-[24px] rounded-md overflow-y-auto">
                 <div className="
                     absolute left-[90%] text-2xl font-black text-white cursor-pointer hover:text-warning"
                     onClick={() => document.querySelector('#listsDialog').close()}

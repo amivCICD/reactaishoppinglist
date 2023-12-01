@@ -83,6 +83,7 @@ export default ({ itemsArr, currentObj, setCurrentObj }) => {
     useLayoutEffect(() => {
         let x = Math.random().toString().slice(2, 4)
 
+
         if (initialLoad) {
             let ctx = gsap.context(() => {
                 gsap.fromTo('.itemDiv',

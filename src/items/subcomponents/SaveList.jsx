@@ -2,6 +2,7 @@ import { useEffect, useReducer, useRef, useState } from "react";
 import { retrieveKeys, retrieveLists, retrievePrimaryArr, saveList } from "../saveRetrieve";
 import { INITIAL_STATE, postReducer } from "../../postReducer/postReducer";
 import { ACTION_TYPES } from "../../postReducer/actiontypes";
+import { gsap } from "gsap";
 
 
 export default ({ itemsArr, currentObj, setCurrentObj }) => {
@@ -28,6 +29,21 @@ export default ({ itemsArr, currentObj, setCurrentObj }) => {
 
     const handleDialogOpen = () => { // open dialog
         document.querySelector('#nameListDialog').showModal();
+        let ctx = gsap.context(() => {
+            gsap.fromTo('#nameListDialog',
+                {
+                    opacity: 0,
+                    x: 1000,
+                },
+                {
+                    x: 0,
+                    y:0,
+                    opacity: 1,
+                    duration: 1,
+                    stagger: .05,
+                    ease: 'elastic'
+                })
+        })
     }
 
     return (
