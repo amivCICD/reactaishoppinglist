@@ -10,7 +10,7 @@ function App() {
 console.log("%c Made with Web ♥ by AMIV ivthe.art", "background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%); color:black; font-size: 24px;");
 
   return (
-    <div className="App bg-base-100 h-full w-full">
+    <div className="App h-full w-full">
       <Header />
       <AddItems />
     </div>
