@@ -108,7 +108,7 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
     return (
         <>
         {loading &&
-            <div id="loading" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md mb-48">
+            <div id="loading" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md my-48">
                 <h3 className="text-center text-xl p-4 pt-2">Your query: "{initialQuery}"</h3>
                 <span className="text-2xl text-warning bg-transparent mr-auto animate-reverse-spin">&#10042;</span>
                 <div className="animate-spin text-8xl text-warning bg-transparent">&#10042;</div>

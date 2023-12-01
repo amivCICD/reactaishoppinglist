@@ -196,7 +196,7 @@ export default () => {
             <ViewDialog currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} handleDeleteList={handleDeleteList} />
             <NewList currentObj={currentObj} setCurrentObj={setCurrentObj} handleStateChange={handleStateChange} />
         </div>
-        <div className="h-52">
+        <div className="h-full">
             <GPTInput handleStateChange={handleStateChange} currentObj={currentObj} setCurrentObj={setCurrentObj} />
         </div>
         </>

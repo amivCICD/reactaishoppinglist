@@ -1,12 +1,11 @@
-html {
+.App {
     background: linear-gradient(34deg, #000000, #2c2c2c, #3a3a3a, #5c5c5c);
     background-size: 800% 800%;
 
     -webkit-animation: AnimationName 15s ease infinite;
     -moz-animation: AnimationName 15s ease infinite;
     animation: AnimationName 15s ease infinite;
-    width: 100%;
-    height: 100%;
+
 }
 
 @-webkit-keyframes AnimationName {
@@ -23,4 +22,17 @@ html {
     0%{background-position:84% 0%}
     50%{background-position:17% 100%}
     100%{background-position:84% 0%}
+}
+
+body {
+    width: 100%;
+    height: 100%;
+
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
