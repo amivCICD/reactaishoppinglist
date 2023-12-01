@@ -26,39 +26,55 @@ export default () => {
     const [listNames, setListNames] = useState([])
     const [listNames2, setListNames2] = useState([])
     let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
-    const [currentObj, setCurrentObj] = useLocalStorage(pak, INITIAL_STATE)
-    
+    const [currentObj, setCurrentObj] = useLocalStorage(pak, INITIAL_STATE);
+    const inputRef = useRef();
+    const [windowWidth, setWindowWidth] = useState(null);
+
 
     const handleStateChange = (newState) => {
         setParentState(newState)
-        console.log('parent state ', parentState);
+        // console.log('parent state ', parentState);
         dispatch({ type: ACTION_TYPES.STATE_UPDATED })
     }
-    
+
     useEffect(() => {
-        console.log(' add items re rendered');
+        // console.log(' add items re rendered');
         setListNames(objNamesList(getObjCount()));
-        console.log('list names in use effect', listNames);
+        // console.log('list names in use effect', listNames);
         setItemsArr(currentObj?.groceryList);
+
+        setWindowWidth(window.innerWidth)
     }, [currentObj, parentState, listNames2])
 
-    
-    
-    
-    
+
+
+
+
 
     const handleChange = (e) => {
-        dispatch({ type: ACTION_TYPES.CHANGE_INPUT, payload: {name: e.target.name, value: e.target.value ? e.target.value : ""} })
+        dispatch({ type: ACTION_TYPES.CHANGE_INPUT, payload: {name: e.target.name, value: e.target.value ? e.target.value : ""} });
+
+
+        // console.log(inputRef.current.size);
+        // console.log(inputRef.current.value);
+        // console.log(e.target.value);
+        if (inputRef.current.value.length === 15) {
+            inputRef.current.classList.remove(`w-72`)
+            inputRef.current.classList.add(`w-[350px]`)
+        }
+
+
+
     }
     const handleClick = () => {
         if (document.querySelector('.groceryInput').value === '') return;
         let groceryId = Math.random().toString().slice(2);
         let objId = Math.random().toString().slice(2);
- 
+
         const handleStuff = () => {
-           
+
             let filt = currentObj.groceryList.filter(i => i.grocery !== 'Please add a grocery item to proceed...')
-            
+
             if (currentObj?.groceryList?.length) {
                 setCurrentObj(
                     { ...currentObj, groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }, ...filt ] }
@@ -69,18 +85,21 @@ export default () => {
                 setCurrentObj(
                     { ...currentObj, groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }] }
                 )
-            }      
+            }
         }
         handleStuff()
+
+        inputRef.current.classList.remove(`w-[350px]`)
+        inputRef.current.classList.add('w-72')
 
 
         document.querySelector('.groceryInput').value = '';
         document.querySelector('.groceryInput').focus();
-       
+
     }
     const handleEnterKeyDown = (e) => {
         if (document.querySelector('.groceryInput').value === '') return;
-        
+
         const plusBtn = document.querySelector("#plus");
         if (e.key === 'Enter' || e.key === 'NumpadEnter') {
             plusBtn.click()
@@ -94,7 +113,7 @@ export default () => {
         let copy = { ...currentObj }
         copy.groceryList = [{ grocery: 'Please add a grocery item to proceed...', id: randomId, acquired: false }];
         localStorage.setObj(copy.id, copy)
-        setCurrentObj(copy) 
+        setCurrentObj(copy)
     }
     const handleDeleteList = e => {
         if (e.target.id === currentObj.id) {
@@ -104,16 +123,16 @@ export default () => {
             // console.log('filt array in 1st section ', filtArr); // its correct
             // if (filtArr.length === 1) {
             //     console.log('hitting?');
-            
+
             // }
             // if (listNames.length === 1) {
                 //     filtArr[0] = { groceryList: [{ grocery: 'Please add a grocery item to proceed...', acquired: false }] , id: randomId, primary: true }
                 //     setCurrentObj(filtArr[0]);
                 //     return
                 // }
-                
-                
-                
+
+
+
             // let randomId = Math.random().toString().slice(2)
             // localStorage.removeItem(e.target.id)
             // console.log('listNames BEFORE first if ', listNames);
@@ -123,48 +142,51 @@ export default () => {
             // console.log('top section current obj', currentObj);
             // setCurrentObj({ groceryList: [{ grocery: 'Please add a grocery item to proceed...', acquired: false }] , id: randomId, primary: true })
             // setParentState(prev => !prev)
-            
+
         } else {
             let filtArr = listNames.filter(i => i.id !== e.target.id)
             localStorage.removeItem(e.target.id)
             setListNames(filtArr)
         }
     }
-    
+
     let component = useRef();
     useLayoutEffect(() => {
 
         let ctx = gsap.context(() => {
             gsap.fromTo(['#plus', '#minus'], { y: -1500 }, { y: 0, duration: 1, ease: 'elastic'  })
-            
+
         }, component)
         gsap.fromTo('.groceryInput', { x: -2000 }, { x: 0 })
         return () => ctx.revert();
     }, [])
-    
+
 
     return (
         <>
-        <div className="flex items-center justify-center pt-2 pb-6">
-            <div className="relative" ref={component}>
-                <input className="groceryInput input input-bordered input-success w-72 max-w-md" 
-                       type="text" 
+        <div className="flex items-center justify-center pt-2 pb-6 w-full">
+            <div className="grid grid-cols-1 grid-rows-1 items-center justify-center" ref={component}>
+                <input className="groceryInput input input-bordered input-success w-72 max-w-md col-start-1 row-start-1"
+                       type="text"
                        placeholder="Grocery..."
                        onChange={handleChange}
                        name="grocery"
                        onKeyUp={handleEnterKeyDown}
+                       ref={inputRef}
+
                 />
-                <div className="absolute top-0 left-[178px] tooltip" data-tip="Add item"  >
-                    <button id="plus" className="btn btn-accent btn-outline border-2 text-4xl pb-2 z-40" 
-                            onClick={handleClick}
-                            
-                    >+</button>
-                </div>
-                    <div className="absolute top-0 left-[235px] tooltip" data-tip="Clear entire list">
-                    <button id="minus" className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2"
-                            onClick={clearList}
-                    >&#9850;</button>
+                <div className="col-start-1 row-start-1 flex flex-row justify-end">
+                    <div className=" tooltip w-fit" data-tip="Add item"  >
+                        <button id="plus" className="btn btn-accent btn-outline border-2 text-4xl pb-2"
+                                onClick={handleClick}
+                                >+</button>
                     </div>
+                    <div className=" tooltip w-fit" data-tip="Clear entire list">
+                        <button id="minus" className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2"
+                            onClick={clearList}
+                            >&#9850;</button>
+                    </div>
+                </div>
             </div>
         </div>
         <List itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} onStateChange={handleStateChange}  />

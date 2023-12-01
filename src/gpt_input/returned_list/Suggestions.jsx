@@ -11,9 +11,9 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
     const [stateChanged, setStateChanged] = useState(false);
     const [diminished, setDiminished] = useState(false);
     const [remainderItems, setRemainderItems] = useState(null);
-    
 
-    
+
+
     // const aiReplyList = ai?.reply?.split('\n')
 
     // so we have, aiReply; filteredAi; remainderItems
@@ -22,7 +22,7 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
     // filtAi will take on aiReply, so that we can filter out each item
     // filtAi is set to remainderItems as the array is diminished
     // once diminished, we need to reset everything
-    
+
 
 
 
@@ -48,8 +48,8 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
             document.querySelector('#results')
                 ?.scrollIntoView({ block: 'center', behavior: 'smooth'})
         }
-        
-        
+
+
 
         if (filteredAi && !newQuery) {
             return
@@ -58,28 +58,28 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
             let itemized = makeNewObj(arrFromAiReply)
                 // itemized will go here
                 setFilteredAi(itemized)
-        }  
-       
-        
+        }
+
+
         // console.log('aireply as props ', aiReply);
         // console.log('aireply.reply ', aiReply?.reply);
         // console.log('remainderItems ', remainderItems);
         // if (aiReply && !filteredAi) { // aiReply
         //     let arrFromAiReply = aiReply?.reply.split('\n')
         //     let itemized = makeNewObj(arrFromAiReply)
-            
+
         //     setFilteredAi(itemized) // itemized will go here
         // }
-        
-        
-        
+
+
+
         // if (aiReply) {
         //     let arr = aiReply?.reply.split('\n')
         //     let itemized = makeNewObj(arr)
         //     setAiObj(itemized)
         //     console.log(itemized);
         // }
-        
+
     }, [aiReply, filteredAi, temporaryArr, currentObj, loading])
 
     const handleClick = (e) => {
@@ -107,15 +107,15 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
 
     return (
         <>
-        {loading && 
-            <div id="loading" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md">
+        {loading &&
+            <div id="loading" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md mb-48">
                 <h3 className="text-center text-xl p-4 pt-2">Your query: "{initialQuery}"</h3>
                 <span className="text-2xl text-warning bg-transparent mr-auto animate-reverse-spin">&#10042;</span>
                 <div className="animate-spin text-8xl text-warning bg-transparent">&#10042;</div>
                 <span className="text-4xl text-warning bg-transparent ml-auto animate-reverse-spin">&#10042;</span>
             </div>
         }
-        {!loading && !!filteredAi?.length && <div id="results" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md">
+        {!loading && !!filteredAi?.length && <div id="results" className="flex justify-center items-center flex-col p-4 bg-neutral rounded-md mb-48">
             <h3 className="text-center text-xl p-4 pt-2">Your query: "{initialQuery}"</h3>
             <h1 className="text-left text-4xl p-4 pt-2">ChatGPT suggested items:</h1>
                 <ul className="m-2">
@@ -123,30 +123,30 @@ export default ({ aiReply, initialQuery, temporaryArr, loading, newQuery, curren
             // aiObj && aiObj?.map((i) => {
                 filteredAi?.map((i) => {
                     return (
-                        <li 
+                        <li
                             className="text-center text-success font-bold"
                             key={i.id}
                         >
                                 {i.grocery}
-                            <a 
+                            <a
                                 className="text-3xl text-warning ml-2 btn"
-                                id={i.id}    
+                                id={i.id}
                                 onClick={handleClick}
                             >
                                 +
                             </a>
                         </li>
                     )
-                }) 
+                })
             }
                 </ul>
-                <button 
+                <button
                     className="m-4 p-4 border border-dashed border-accent font-bold rounded-lg hover:bg-primary"
                     onClick={handleAddToList}
                 >
                     Add this list to existing list
                 </button>
-                
+
             </div>
         }
         </>

@@ -1,7 +1,7 @@
 
 function saveList(listName, itemsArr) {
     let id = itemsArr.id;
-    
+
     let savedListID = Math.random().toString().slice(2);
     let copy = itemsArr?.slice();
     let savedShoppingList = { name: listName, id: id === undefined ? savedListID : id, primary: true, groceryList: [...copy]}
@@ -63,7 +63,7 @@ function retrievePrimaryArrayKey() {
 
 function deleteList(listId) {
     let list = localStorage.getObj(listId)
-    console.log(`List ${list.name ? list.name : 'Unnamed List.'} w/ ID: '${list?.id}' has been deleted.`)
+    // console.log(`List ${list.name ? list.name : 'Unnamed List.'} w/ ID: '${list?.id}' has been deleted.`)
     localStorage.removeItem(listId)
 }
 

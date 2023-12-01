@@ -7,10 +7,10 @@ import { useEffect, useState } from "react"
 function App() {
   // npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch  // dev
   // npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch  // production build run from root folder, not src
- 
+
 
   return (
-    <div className="App bg-base-100 h-full">
+    <div className="App bg-base-100 h-full w-full">
       <Header />
       <AddItems />
     </div>
