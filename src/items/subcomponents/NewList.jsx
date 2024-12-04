@@ -10,7 +10,11 @@ export default ({ currentObj, setCurrentObj, handleStateChange }) => {
     const handleClick = () => {
         let copy = { ...currentObj }
         copy.primary = false;
+<<<<<<< HEAD
         console.log(copy);
+=======
+        // console.log(copy);
+>>>>>>> dev
         // setCurrentObj(copy)
         localStorage.setObj(copy.id, copy)
         // let initial_state_copy = { ...INITIAL_STATE }
@@ -18,8 +22,13 @@ export default ({ currentObj, setCurrentObj, handleStateChange }) => {
         // setParentState(val => !val)
         // handleStateChange(parentState)
         let id = Math.random().toString().slice(2)
+<<<<<<< HEAD
         
        
+=======
+
+
+>>>>>>> dev
         function makeNewObj() {
             return {
                 id: id,
@@ -29,16 +38,28 @@ export default ({ currentObj, setCurrentObj, handleStateChange }) => {
             }
         }
         const n = new makeNewObj()
+<<<<<<< HEAD
         console.log('constructor function', n);
 
         localStorage.setObj(n.id, n)
         let item = localStorage.getObj(n.id)
         console.log('item``` ', item);
+=======
+        // console.log('constructor function', n);
+
+        localStorage.setObj(n.id, n)
+        let item = localStorage.getObj(n.id)
+        // console.log('item``` ', item);
+>>>>>>> dev
         setCurrentObj(item);
 
         let li = Array.from(document.querySelectorAll('li'))
         li.forEach(line => {
+<<<<<<< HEAD
           
+=======
+
+>>>>>>> dev
             if (line.id === currentObj.id) {
                 line.classList.remove('border-4')
                 line.classList.remove('border-warning')
@@ -53,6 +74,7 @@ export default ({ currentObj, setCurrentObj, handleStateChange }) => {
     }
 
     useEffect(() => {
+<<<<<<< HEAD
         
 
     }, [state.NEW_STATE, parentState])
@@ -61,6 +83,16 @@ export default ({ currentObj, setCurrentObj, handleStateChange }) => {
     return (
         <>
             <a 
+=======
+
+
+    }, [state.NEW_STATE, parentState])
+
+
+    return (
+        <>
+            <a
+>>>>>>> dev
                 className="btn btn-primary btn-outline btn-circle ml-5"
                 onClick={handleClick}
             >

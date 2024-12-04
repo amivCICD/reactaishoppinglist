@@ -5,6 +5,7 @@ let arr = ["Please add an item to continue..."]
 
 export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
 
+<<<<<<< HEAD
     
     return (
         <div>
@@ -19,6 +20,22 @@ export default ({ itemsArr, currentObj, setCurrentObj, onStateChange }) => {
                 />
             </div>
         
+=======
+
+    return (
+        <div>
+
+            <div className="w-5/6 sm:w-3/4 bg-neutral flex flex-col items-start mx-auto p-5 h-fit rounded-md">
+                {/* <ListItem itemsArr={itemsArr?.length !== 0 ? itemsArr : arr} onStateChange={onStateChange} /> */}
+                <ListItem
+                    itemsArr={itemsArr}
+                    currentObj={currentObj}
+                    setCurrentObj={setCurrentObj}
+                    onStateChange={onStateChange}
+                />
+            </div>
+
+>>>>>>> dev
         </div>
     )
 }
