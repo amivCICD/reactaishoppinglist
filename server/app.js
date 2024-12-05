@@ -18,51 +18,29 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname + '/dist')); // static assets
 
 app.post('/api/chat', async (req, res) => {
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> dev
     // const text = req.body;
     // const { text } = 'vegan food shopping list by popularity'
     const { data } = req.body
     console.log('Req.body: ', data);
 
-<<<<<<< HEAD
-    const configuration = new Configuration({ apiKey: process.env.OPEN_API_KEY})
-    const openai = new OpenAIApi(configuration);
-
-    
-=======
     const configuration = new Configuration({ apiKey: process.env.OPEN_API_KEY })
     const openai = new OpenAIApi(configuration);
 
 
->>>>>>> dev
     try {
         const completion = await openai.createChatCompletion({
             model: 'gpt-3.5-turbo',
             messages: [{ role: 'user', content: `listed items, maximum of five, request: ${data}`}]
         })
         console.log('completion.data.choices[0].message: ', completion.data.choices[0].message.content);
-<<<<<<< HEAD
-        
-        
-=======
 
 
->>>>>>> dev
         const reply = completion.data.choices[0].message.content;
         res.json({ reply })
 
     } catch(err) {
         console.log(err);
     }
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> dev
 
 
     // try {

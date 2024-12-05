@@ -20,13 +20,8 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
         // if (temporaryArr) {
         //     setLoading(false)
         // }
-<<<<<<< HEAD
-        
-        console.log('initialinner ', initialInnerHeight)
-=======
 
         // console.log('initialinner ', initialInnerHeight)
->>>>>>> dev
         // console.log('adjustableinner  ', innerHeight)
         // window.onresize = e => console.log(e.target.innerHeight)
         window.onresize = e => {
@@ -44,11 +39,6 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
         return () => {
             setAiReply(null)
         }
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> dev
     }, [aiReply, temporaryArr, innerHeight])
 
     const sendPost = (data) => {
@@ -103,37 +93,16 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
         // ]
         // delay(1000).then(() => setTemporaryArr(a))
         // scrollToElement()
-<<<<<<< HEAD
-        
-        
-    }
-
-    
-=======
 
 
     }
 
 
->>>>>>> dev
 
 
 
     return (
         <>
-<<<<<<< HEAD
-            <div ref={boxRef} className="bg-neutral rounded-md w-fit h-fit flex flex-col items-center justify-center mx-auto my-[5%]">
-                <label className="p-2 font-bold mx-2 my-2">Ask ChatGPT 3.5 Turbo for suggestions...</label>
-                <input className='input p-2 bg-transparent border border-error text-white placeholder:text-white placeholder:text-opacity-30' 
-                    placeholder="e.g. protein diet"
-                    onChange={handleChange}
-                    value={val}
-                
-                />
-                <a className="
-                    btn outline outline-white outline-dashed 
-                    p-2 mx-4 my-4 bg-gradient-to-r from-secondary to-primary text-neutral font-bold 
-=======
             <div ref={boxRef} className="bg-neutral rounded-md w-fit h-fit flex flex-col items-center justify-center mx-auto">
                 <label className="p-2 font-bold mx-2 my-2">Get <span className="italic">ChatGPT 3.5 Turbo</span> suggestions...</label>
                 <input className='input p-2 bg-transparent border border-error text-white placeholder:text-white placeholder:text-opacity-30 animate-pulse'
@@ -145,27 +114,11 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
                 <a className="
                     btn outline outline-white outline-dashed
                     p-2 mx-4 my-4 bg-gradient-to-r from-secondary to-primary text-neutral font-bold
->>>>>>> dev
                     hover:text-accent hover:outline-error
                     "
                    onClick={handleClick}
                 >Submit</a>
             </div>
-<<<<<<< HEAD
-            <div className="flex items-center justify-center">
-                <Suggestions 
-                    aiReply={aiReply} 
-                    initialQuery={initialQuery} 
-                    temporaryArr={temporaryArr} 
-                    loading={loading} 
-                    handleStateChange={handleStateChange} 
-                    currentObj={currentObj}
-                    setCurrentObj={setCurrentObj}
-                    newQuery={newQuery}
-                    
-                />
-                
-=======
             <div className="flex items-center justify-center bg-none bg-opacity-0">
                 <Suggestions
                     aiReply={aiReply}
@@ -179,7 +132,6 @@ export default ({ handleStateChange, currentObj, setCurrentObj }) => {
 
                 />
 
->>>>>>> dev
             </div>
         </>
     )

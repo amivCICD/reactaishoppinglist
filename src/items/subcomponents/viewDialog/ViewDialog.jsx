@@ -1,37 +1,18 @@
 import { useEffect, useReducer, useState } from "react";
 import { INITIAL_STATE, postReducer } from "../../../postReducer/postReducer";
 import { retrieveKeys, retrieveLists } from "../../saveRetrieve"
-<<<<<<< HEAD
-=======
 import { gsap } from "gsap";
->>>>>>> dev
 
 
 
 export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteList }) => {
 
     const [state, dispatch] = useReducer(postReducer, INITIAL_STATE)
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> dev
 
     useEffect(() => {
         // const keys = retrieveKeys();
         // const allLists = retrieveLists(keys)
         // console.log('all lists', allLists);
-<<<<<<< HEAD
-        console.log(listNames); // same as above
-        
-
-    }, [state.STATE_UPDATED])
-
-    console.log(listNames);
-    const openDialog = () => {
-        document.querySelector('#listsDialog').showModal();
-        let li = Array.from(document.querySelectorAll('li'))
-=======
         //console.log(listNames); // same as above
 
 
@@ -61,7 +42,6 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteLi
                 })
         })
 
->>>>>>> dev
         // console.log(li[0].id);
         li.forEach(line => {
             if (line.id === currentObj.id) {
@@ -82,11 +62,7 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteLi
         setCurrentObj(copy)
 
         let li = Array.from(document.querySelectorAll('li'))
-<<<<<<< HEAD
-        console.log(li[0].id);
-=======
         // console.log(li[0].id);
->>>>>>> dev
         li.forEach(line => {
             if (line.id === currentObj.id) {
                 line.classList.remove('border-4')
@@ -96,19 +72,11 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteLi
         })
 
         document.querySelector('#listsDialog').close();
-<<<<<<< HEAD
-       
-    //    updateObjectPrimary(currentObj, true) 
-    }
-    
-    
-=======
 
     //    updateObjectPrimary(currentObj, true)
     }
 
 
->>>>>>> dev
     return (
         <>
         <a className="
@@ -117,11 +85,7 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteLi
             onClick={openDialog}
             >Lists
         </a>
-<<<<<<< HEAD
-            <dialog id="listsDialog" className="w-3/4 h-3/4 bg-neutral outline-double outline-warning outline-[24px] rounded-md">
-=======
             <dialog id="listsDialog" className="w-3/4 h-3/4 bg-neutral outline-double outline-warning outline-[24px] rounded-md overflow-y-auto">
->>>>>>> dev
                 <div className="
                     absolute left-[90%] text-2xl font-black text-white cursor-pointer hover:text-warning"
                     onClick={() => document.querySelector('#listsDialog').close()}
@@ -129,37 +93,22 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteLi
                 </div>
                 <div className="border-dashed border-warning border-4 text-white w-fit p-2 italic font-extralight">current list</div>
                 <div className="flex flex-col items-center justify-center my-auto h-full">
-<<<<<<< HEAD
-                <h1 className="text-4xl text-white font-black">Saved Lists:</h1>
-=======
                 <h1 className="text-2xl text-white font-black">Saved Lists:</h1>
->>>>>>> dev
                     <ul className="text-white inline-block p-4">
                         {listNames?.length > 0 && listNames?.map((list, i) => {
                             // <li className="text-white z-50" key={list?.id ? list.id : list.name}>{list?.name}</li>
                             return <li key={list?.id ? list?.id : i} id={list.id} className="text-secondary p-2 font-bold flex items-center justify-center">
-<<<<<<< HEAD
-                                        {list.id === currentObj.id ? 
-                                            <button 
-                                                className="
-                                                    btn btn-accent btn-xs sm:btn-xl btn-outline 
-=======
                                         {list.id === currentObj.id ?
                                             <button
                                                 className="
                                                     btn btn-accent btn-xs sm:btn-xl btn-outline
->>>>>>> dev
                                                     border-2 text-4xl h-12 pb-2 mr-auto
                                                     tooltip"
                                                 id={list.id}
                                                 data-tip="This is your current list"
                                             >&#9733;
                                             </button>
-<<<<<<< HEAD
-                                         : <button 
-=======
                                          : <button
->>>>>>> dev
                                             className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2 mr-auto"
                                             onClick={handleDeleteList}
                                             id={list.id}
@@ -167,11 +116,7 @@ export default ({ currentObj, setCurrentObj, itemsArr, listNames, handleDeleteLi
                                             </button>
                                         }
                                         <p className="flex items-center justify-center p-2">{list?.name ? list?.name : list?.id}</p>
-<<<<<<< HEAD
-                                        {list.id !== currentObj.id ? <a 
-=======
                                         {list.id !== currentObj.id ? <a
->>>>>>> dev
                                             className="btn btn-circle btn-outline ml-auto text-accent hover:bg-transparent hover:text-success-content"
                                             onClick={handleLoadLists}
                                             id={list.id}

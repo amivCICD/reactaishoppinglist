@@ -26,31 +26,6 @@ export default () => {
     const [listNames, setListNames] = useState([])
     const [listNames2, setListNames2] = useState([])
     let pak = retrievePrimaryArrayKey()(retrieveKeys())(retrieveLists(retrieveKeys()))
-<<<<<<< HEAD
-    const [currentObj, setCurrentObj] = useLocalStorage(pak, INITIAL_STATE)
-    
-
-    const handleStateChange = (newState) => {
-        setParentState(newState)
-        console.log('parent state ', parentState);
-        dispatch({ type: ACTION_TYPES.STATE_UPDATED })
-    }
-    
-    useEffect(() => {
-        console.log(' add items re rendered');
-        setListNames(objNamesList(getObjCount()));
-        console.log('list names in use effect', listNames);
-        setItemsArr(currentObj?.groceryList);
-    }, [currentObj, parentState, listNames2])
-
-    
-    
-    
-    
-
-    const handleChange = (e) => {
-        dispatch({ type: ACTION_TYPES.CHANGE_INPUT, payload: {name: e.target.name, value: e.target.value ? e.target.value : ""} })
-=======
     const [currentObj, setCurrentObj] = useLocalStorage(pak, INITIAL_STATE);
     const inputRef = useRef();
     const [windowWidth, setWindowWidth] = useState(null);
@@ -90,25 +65,16 @@ export default () => {
 
 
 
->>>>>>> dev
     }
     const handleClick = () => {
         if (document.querySelector('.groceryInput').value === '') return;
         let groceryId = Math.random().toString().slice(2);
         let objId = Math.random().toString().slice(2);
-<<<<<<< HEAD
- 
-        const handleStuff = () => {
-           
-            let filt = currentObj.groceryList.filter(i => i.grocery !== 'Please add a grocery item to proceed...')
-            
-=======
 
         const handleStuff = () => {
 
             let filt = currentObj.groceryList.filter(i => i.grocery !== 'Please add a grocery item to proceed...')
 
->>>>>>> dev
             if (currentObj?.groceryList?.length) {
                 setCurrentObj(
                     { ...currentObj, groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }, ...filt ] }
@@ -119,20 +85,6 @@ export default () => {
                 setCurrentObj(
                     { ...currentObj, groceryList: [{ grocery: state.grocery, id: groceryId, acquired: false }] }
                 )
-<<<<<<< HEAD
-            }      
-        }
-        handleStuff()
-
-
-        document.querySelector('.groceryInput').value = '';
-        document.querySelector('.groceryInput').focus();
-       
-    }
-    const handleEnterKeyDown = (e) => {
-        if (document.querySelector('.groceryInput').value === '') return;
-        
-=======
             }
         }
         handleStuff()
@@ -148,7 +100,6 @@ export default () => {
     const handleEnterKeyDown = (e) => {
         if (document.querySelector('.groceryInput').value === '') return;
 
->>>>>>> dev
         const plusBtn = document.querySelector("#plus");
         if (e.key === 'Enter' || e.key === 'NumpadEnter') {
             plusBtn.click()
@@ -162,11 +113,7 @@ export default () => {
         let copy = { ...currentObj }
         copy.groceryList = [{ grocery: 'Please add a grocery item to proceed...', id: randomId, acquired: false }];
         localStorage.setObj(copy.id, copy)
-<<<<<<< HEAD
-        setCurrentObj(copy) 
-=======
         setCurrentObj(copy)
->>>>>>> dev
     }
     const handleDeleteList = e => {
         if (e.target.id === currentObj.id) {
@@ -176,26 +123,15 @@ export default () => {
             // console.log('filt array in 1st section ', filtArr); // its correct
             // if (filtArr.length === 1) {
             //     console.log('hitting?');
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> dev
             // }
             // if (listNames.length === 1) {
                 //     filtArr[0] = { groceryList: [{ grocery: 'Please add a grocery item to proceed...', acquired: false }] , id: randomId, primary: true }
                 //     setCurrentObj(filtArr[0]);
                 //     return
                 // }
-<<<<<<< HEAD
-                
-                
-                
-=======
 
 
 
->>>>>>> dev
             // let randomId = Math.random().toString().slice(2)
             // localStorage.removeItem(e.target.id)
             // console.log('listNames BEFORE first if ', listNames);
@@ -205,46 +141,21 @@ export default () => {
             // console.log('top section current obj', currentObj);
             // setCurrentObj({ groceryList: [{ grocery: 'Please add a grocery item to proceed...', acquired: false }] , id: randomId, primary: true })
             // setParentState(prev => !prev)
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> dev
         } else {
             let filtArr = listNames.filter(i => i.id !== e.target.id)
             localStorage.removeItem(e.target.id)
             setListNames(filtArr)
         }
     }
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> dev
     let component = useRef();
     useLayoutEffect(() => {
 
         let ctx = gsap.context(() => {
             gsap.fromTo(['#plus', '#minus'], { y: -1500 }, { y: 0, duration: 1, ease: 'elastic'  })
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> dev
         }, component)
         gsap.fromTo('.groceryInput', { x: -2000 }, { x: 0 })
         return () => ctx.revert();
     }, [])
-<<<<<<< HEAD
-    
-
-    return (
-        <>
-        <div className="flex items-center justify-center pt-2 pb-6">
-            <div className="relative" ref={component}>
-                <input className="groceryInput input input-bordered input-success w-72 max-w-md" 
-                       type="text" 
-=======
 
 
     return (
@@ -253,25 +164,10 @@ export default () => {
             <div className="grid grid-cols-1 grid-rows-1 items-center justify-center" ref={component}>
                 <input className="groceryInput input input-bordered input-success w-72 max-w-md col-start-1 row-start-1"
                        type="text"
->>>>>>> dev
                        placeholder="Grocery..."
                        onChange={handleChange}
                        name="grocery"
                        onKeyUp={handleEnterKeyDown}
-<<<<<<< HEAD
-                />
-                <div className="absolute top-0 left-[178px] tooltip" data-tip="Add item"  >
-                    <button id="plus" className="btn btn-accent btn-outline border-2 text-4xl pb-2 z-40" 
-                            onClick={handleClick}
-                            
-                    >+</button>
-                </div>
-                    <div className="absolute top-0 left-[235px] tooltip" data-tip="Clear entire list">
-                    <button id="minus" className="btn btn-info btn-xs sm:btn-xl btn-outline border-2 text-4xl h-12 pb-2"
-                            onClick={clearList}
-                    >&#9850;</button>
-                    </div>
-=======
                        ref={inputRef}
 
                 />
@@ -287,7 +183,6 @@ export default () => {
                             >&#9850;</button>
                     </div>
                 </div>
->>>>>>> dev
             </div>
         </div>
         <List itemsArr={itemsArr} currentObj={currentObj} setCurrentObj={setCurrentObj} onStateChange={handleStateChange}  />
@@ -297,11 +192,7 @@ export default () => {
             <ViewDialog currentObj={currentObj} setCurrentObj={setCurrentObj} itemsArr={itemsArr} listNames={listNames} handleDeleteList={handleDeleteList} />
             <NewList currentObj={currentObj} setCurrentObj={setCurrentObj} handleStateChange={handleStateChange} />
         </div>
-<<<<<<< HEAD
-        <div className="h-52">
-=======
         <div className="h-full">
->>>>>>> dev
             <GPTInput handleStateChange={handleStateChange} currentObj={currentObj} setCurrentObj={setCurrentObj} />
         </div>
         </>
