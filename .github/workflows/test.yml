@@ -7,7 +7,7 @@ on:
 jobs:
   test:
     runs-on: self-hosted
-	
+
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
@@ -17,6 +17,6 @@ jobs:
 
     - name: SSH into windows server
       run: |
-        sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh-o StrictHostKeyChecking=no server@192.168.1.14 "npm run dev /mnt/c/users/server/documents/servedtunnels/reactaishoppinglist"
+        sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no server@192.168.1.14 "npm run dev /mnt/c/users/server/documents/servedtunnels/reactaishoppinglist"
       env:
         SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
