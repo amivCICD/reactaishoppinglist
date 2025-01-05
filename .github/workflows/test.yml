@@ -12,8 +12,11 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
-    - name: Install sshpass
-      run: sudo apt-get install -y sshpass
+    - name: switch to wsl
+      run: wsl
+
+#    - name: Install sshpass
+#      run: sudo apt-get install -y sshpass
 
     - name: SSH into windows server
       run: |
