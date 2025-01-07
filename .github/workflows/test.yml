@@ -1,27 +1,24 @@
-name: Test pushes and runners
+name: Stop, Build & Run updated container
 
 on:
   push:
     branches: [ "master" ]
 
 jobs:
-  test:
+  stop_build_run:
     runs-on: self-hosted
+    env:
+      IMAGE_NAME: reactaishoppinglist
+      PORT: 4444
 
     steps:
-    - name: Checkout Repo
-      uses: actions/checkout@v4
-
-    - name: test powershell echo
-      run: echo "is this printing to powershell"
-#    - name: switch to wsl
-#      run: wsl.exe
-
-#    - name: Install sshpass
-#      run: sudo apt-get install -y sshpass
-
-#    - name: SSH into windows server
-#      run: |
-#        sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no server@192.168.1.14 "npm run dev /mnt/c/users/server/documents/servedtunnels/reactaishoppinglist"
-#      env:
-#        SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Change to DIR
+        run: cd c:\users\server\documents\servedtunnels\${{env.IMAGE_NAME}}
+      - name: Shut down current container
+        run: docker stop $(docker ps -q --filter "ancestor=${{env.IMAGE_NAME}}")
+      - name: Build new container
+        run: docker build -t artimusmaximus/${{env.IMAGE_NAME}}:latest .
+      - name: Start new container
+        run: docker run -d -p ${{env.PORT}}:${{env.PORT}} artimusmaximus/${{env.IMAGE_NAME}}:latest
