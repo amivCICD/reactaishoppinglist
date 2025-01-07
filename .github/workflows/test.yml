@@ -18,7 +18,8 @@ jobs:
       #- name: Change to DIR
         #run: cd c:\users\server\documents\servedtunnels\${{env.IMAGE_NAME}}
       - name: Shut down current container
-        run: docker stop $(docker ps -q --filter "ancestor=${{env.IMAGE_NAME}}")
+        #run: docker stop $(docker ps -q --filter "ancestor=${{env.IMAGE_NAME}}")
+        run: docker stop --filter "ancestor=reactaishoppinglist:latest" 
       - name: Build new container
         run: docker build -t artimusmaximus/${{env.IMAGE_NAME}}:latest ${{env.DIR}}
       - name: Start new container
