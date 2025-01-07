@@ -19,7 +19,11 @@ jobs:
         #run: cd c:\users\server\documents\servedtunnels\${{env.IMAGE_NAME}}
       - name: Shut down current container
         #run: docker stop $(docker ps -q --filter "ancestor=${{env.IMAGE_NAME}}")
-        run: docker stop --filter "ancestor=reactaishoppinglist:latest" 
+        #run: docker stop --filter "ancestor=reactaishoppinglist:latest" 
+        run: |
+          $containerIds = docker ps -q | ForEach-Object { $container = docker inspect --format '{{.Id}}'} $_
+          if ($container -match "artimusmaximus/${{env.IMAGE_NAME}}:latest") { docker stop $container.Split(" ")[0] }
+          Write-Host "Container found and shutting down..."
       - name: Build new container
         run: docker build -t artimusmaximus/${{env.IMAGE_NAME}}:latest ${{env.DIR}}
       - name: Start new container
