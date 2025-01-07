@@ -24,7 +24,9 @@ jobs:
           $containerIds = docker ps -q | ForEach-Object { $container = docker inspect --format '{{.Id}}'} $_
           if ($container -match "artimusmaximus/${{env.IMAGE_NAME}}:latest") { docker stop $container.Split(" ")[0] }
           Write-Host "Container found and shutting down..."
-      - name: Build new container
-        run: docker build -t artimusmaximus/${{env.IMAGE_NAME}}:latest ${{env.DIR}}
+      #- name: Build new container
+        #run: docker build -t artimusmaximus/${{env.IMAGE_NAME}}:latest
+      - name: pull updated container
+        run: docker pull artimusmaximus/${{env.IMAGE_NAME}}:latest
       - name: Start new container
         run: docker run -d -p ${{env.PORT}}:${{env.PORT}} artimusmaximus/${{env.IMAGE_NAME}}:latest
