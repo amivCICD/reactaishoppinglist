@@ -1,0 +1,24 @@
+name: Stop, Build & Run updated container
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  stop_build_run:
+    runs-on: self-hosted
+    env:
+      IMAGE_NAME: reactaishoppinglist
+      PORT: 4444
+      API_KEY: ${{secrets.OPEN_API_KEY}}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+      - name: Shut down current container
+        run: |
+          docker ps -q --filter "ancestor=artimusmaximus/${{env.IMAGE_NAME}}:latest" | xargs -r docker stop
+          echo "Shutting down container of name ${{env.IMAGE_NAME}}"
+      - name: pull updated container
+        run: docker pull artimusmaximus/${{env.IMAGE_NAME}}:latest
+      - name: Start new container
+        run: docker run -e OPEN_API_KEY=${{secrets.OPEN_API_KEY}} -d -p ${{env.PORT}}:${{env.PORT}} artimusmaximus/${{env.IMAGE_NAME}}:latest
